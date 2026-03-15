@@ -144,10 +144,3 @@ All tasks were successfully solved by Haiku 4.5 on SkillsBench.
 | threejs-structure-parser | 6 | 1.000 |
 | gravitational-wave-detection | 5 | 1.000 |
 
-## Estimated tokens
-
-A full run (181 samples) uses roughly:
-- Model: ~2M input tokens + ~100K output tokens
-- Judge: ~290K input tokens + ~18K output tokens
-
-With vLLM, this is all local compute — no API cost.
