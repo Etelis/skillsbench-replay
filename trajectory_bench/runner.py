@@ -3,14 +3,14 @@ import json
 import time
 
 from .config import RunConfig
-from .data import Sample, load_samples, estimate_tokens
+from .data import Round, load_rounds, estimate_tokens
 from .judge import judge_compare, CRITERIA
 from .llm import generate
-from .results import init_run_dir, write_sample_result, load_completed_ids, write_summary
+from .results import init_run_dir, write_round_result, load_completed_ids, write_summary
 
 
-async def _eval_sample(
-    sample: Sample,
+async def _eval_round(
+    round_data: Round,
     config: RunConfig,
     semaphore: asyncio.Semaphore,
     progress: dict,
@@ -18,23 +18,23 @@ async def _eval_sample(
     async with semaphore:
         start = time.time()
         result = {
-            "sample_id": sample.sample_id,
-            "task_name": sample.metadata["task_name"],
-            "turn": sample.metadata["turn"],
-            "total_turns": sample.metadata["total_turns"],
-            "reward": sample.metadata.get("reward"),
+            "round_id": round_data.round_id,
+            "task_name": round_data.metadata["task_name"],
+            "turn": round_data.metadata["turn"],
+            "total_turns": round_data.metadata["total_turns"],
+            "reward": round_data.metadata.get("reward"),
         }
 
         try:
             # Generate candidate completion
-            candidate, model_usage = await generate(config.model, sample.prompt)
+            candidate, model_usage = await generate(config.model, round_data.prompt)
             result["candidate_completion"] = candidate
-            result["reference_completion"] = sample.completion
+            result["reference_completion"] = round_data.completion
             result["model_usage"] = model_usage
 
             # Judge comparison — 4 independent criterion calls
             judge_result = await judge_compare(
-                config.judge, sample, sample.completion, candidate
+                config.judge, round_data, round_data.completion, candidate
             )
 
             result["judge_score"] = judge_result.score
@@ -64,7 +64,7 @@ async def _eval_sample(
             status = "ERROR"
         print(
             f"  [{progress['done']}/{progress['total']}] "
-            f"{sample.metadata['task_name']} turn {sample.metadata['turn']} "
+            f"{round_data.metadata['task_name']} turn {round_data.metadata['turn']} "
             f"→ {status}"
         )
 
@@ -77,7 +77,7 @@ def print_summary_table(summary: dict) -> None:
     print(f"Run: {summary['run_name']}")
     print(f"Model: {summary['model']}  |  Judge: {summary['judge']}")
     print(f"{'='*70}")
-    print(f"Overall: {overall['mean_score']:.1%} mean score across {overall['total']} samples")
+    print(f"Overall: {overall['mean_score']:.1%} mean score across {overall['total']} rounds")
 
     # Per-criterion pass rates
     by_criterion = summary.get("by_criterion", {})
@@ -110,25 +110,25 @@ def print_summary_table(summary: dict) -> None:
 
 
 async def run(config: RunConfig) -> dict:
-    samples = load_samples(config)
+    rounds = load_rounds(config)
 
-    if not samples:
-        print("No samples to evaluate.")
+    if not rounds:
+        print("No rounds to evaluate.")
         return {}
 
     run_dir = init_run_dir(config)
 
-    # Check for already-completed samples (resumability)
+    # Check for already-completed rounds (resumability)
     completed = load_completed_ids(run_dir)
-    pending = [s for s in samples if s.sample_id not in completed]
+    pending = [r for r in rounds if r.round_id not in completed]
 
     if completed:
         print(f"Resuming: {len(completed)} already done, {len(pending)} remaining")
 
     if not pending:
-        print("All samples already completed. Loading existing results.")
+        print("All rounds already completed. Loading existing results.")
         all_results = []
-        for task_dir in (run_dir / "samples").iterdir():
+        for task_dir in (run_dir / "rounds").iterdir():
             if not task_dir.is_dir():
                 continue
             for f in task_dir.glob("*.json"):
@@ -138,27 +138,27 @@ async def run(config: RunConfig) -> dict:
         print_summary_table(summary)
         return summary
 
-    print(f"Evaluating {len(pending)} samples (concurrency={config.max_concurrent})")
+    print(f"Evaluating {len(pending)} rounds (concurrency={config.max_concurrent})")
     semaphore = asyncio.Semaphore(config.max_concurrent)
     progress = {"done": 0, "total": len(pending)}
 
-    tasks = [_eval_sample(s, config, semaphore, progress) for s in pending]
+    tasks = [_eval_round(r, config, semaphore, progress) for r in pending]
     new_results = await asyncio.gather(*tasks)
 
-    # Write per-sample results
+    # Write per-round results
     for result in new_results:
-        write_sample_result(run_dir, result)
+        write_round_result(run_dir, result)
 
     # Collect all results (existing + new) for summary
     all_results = list(new_results)
     if completed:
-        for task_dir in (run_dir / "samples").iterdir():
+        for task_dir in (run_dir / "rounds").iterdir():
             if not task_dir.is_dir():
                 continue
             for f in task_dir.glob("*.json"):
                 with open(f) as fh:
                     data = json.load(fh)
-                    if data["sample_id"] in completed:
+                    if data["round_id"] in completed:
                         all_results.append(data)
 
     summary = write_summary(run_dir, all_results, config)

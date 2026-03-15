@@ -29,10 +29,10 @@ class RunConfig:
     run_name: str = "default"
     model: ModelConfig = field(default_factory=ModelConfig)
     judge: JudgeConfig = field(default_factory=JudgeConfig)
-    data_path: str = "data/samples/all-solved.jsonl"
+    data_path: str = "data/rounds/all-solved.jsonl"
     filter_tasks: list[str] | None = None
     filter_turns: list[int] | None = None
-    max_samples: int | None = None
+    max_rounds: int | None = None
     max_concurrent: int = 5
     output_dir: str = "results"
     max_retries: int = 2

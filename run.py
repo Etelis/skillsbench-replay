@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 from trajectory_bench.config import load_config, RunConfig, ModelConfig, JudgeConfig
-from trajectory_bench.data import load_samples, estimate_tokens
+from trajectory_bench.data import load_rounds, estimate_tokens
 from trajectory_bench.runner import run
 
 
@@ -46,32 +46,32 @@ def config_from_cli(args) -> RunConfig:
 
     # Resolve data_path relative to this script
     script_dir = Path(__file__).resolve().parent
-    data_path = str(script_dir / "data" / "samples" / "all-solved.jsonl")
+    data_path = str(script_dir / "data" / "rounds" / "all-solved.jsonl")
 
     return RunConfig(
         run_name=f"eval-{short_name}",
         model=model,
         judge=judge,
         data_path=data_path,
-        max_samples=args.max_samples,
+        max_rounds=args.max_rounds,
         max_concurrent=args.max_concurrent,
         output_dir=args.output_dir,
     )
 
 
 def dry_run(config):
-    samples = load_samples(config)
-    est = estimate_tokens(samples)
+    rounds = load_rounds(config)
+    est = estimate_tokens(rounds)
 
     tasks = {}
-    for s in samples:
-        t = s.metadata["task_name"]
+    for r in rounds:
+        t = r.metadata["task_name"]
         tasks[t] = tasks.get(t, 0) + 1
 
-    print(f"Dry run — {est['n_samples']} samples loaded")
+    print(f"Dry run — {est['n_rounds']} rounds loaded")
     print(f"\nTask breakdown:")
     for task, count in sorted(tasks.items()):
-        print(f"  {task:<35} {count:>4} samples")
+        print(f"  {task:<35} {count:>4} rounds")
 
     print(f"\nEstimated tokens:")
     print(f"  Model input:  {est['est_model_input_tokens']:>10,}")
@@ -96,7 +96,7 @@ def main():
 
     # Common options
     parser.add_argument("--dry-run", action="store_true", help="Print stats without calling LLMs")
-    parser.add_argument("--max-samples", type=int, help="Cap number of samples")
+    parser.add_argument("--max-rounds", type=int, help="Cap number of rounds")
     parser.add_argument("--max-concurrent", type=int, default=10, help="Max concurrent requests")
     parser.add_argument("--output-dir", default="results", help="Output directory")
 
@@ -104,8 +104,8 @@ def main():
 
     if args.config:
         config = load_config(args.config)
-        if args.max_samples is not None:
-            config.max_samples = args.max_samples
+        if args.max_rounds is not None:
+            config.max_rounds = args.max_rounds
     elif args.endpoint and args.model:
         config = config_from_cli(args)
     else:

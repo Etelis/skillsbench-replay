@@ -9,7 +9,7 @@ from .config import RunConfig
 def init_run_dir(config: RunConfig) -> Path:
     run_dir = Path(config.output_dir) / config.run_name
     run_dir.mkdir(parents=True, exist_ok=True)
-    (run_dir / "samples").mkdir(exist_ok=True)
+    (run_dir / "rounds").mkdir(exist_ok=True)
 
     # Save config copy
     config_dst = run_dir / "config.yaml"
@@ -42,23 +42,23 @@ def init_run_dir(config: RunConfig) -> Path:
     return run_dir
 
 
-def write_sample_result(run_dir: Path, result: dict) -> None:
+def write_round_result(run_dir: Path, result: dict) -> None:
     task_name = result["task_name"]
-    task_dir = run_dir / "samples" / task_name
+    task_dir = run_dir / "rounds" / task_name
     task_dir.mkdir(parents=True, exist_ok=True)
 
-    path = task_dir / f"{result['sample_id']}.json"
+    path = task_dir / f"{result['round_id']}.json"
     with open(path, "w") as f:
         json.dump(result, f, indent=2)
 
 
 def load_completed_ids(run_dir: Path) -> set[str]:
     completed = set()
-    samples_dir = run_dir / "samples"
-    if not samples_dir.exists():
+    rounds_dir = run_dir / "rounds"
+    if not rounds_dir.exists():
         return completed
 
-    for task_dir in samples_dir.iterdir():
+    for task_dir in rounds_dir.iterdir():
         if not task_dir.is_dir():
             continue
         for result_file in task_dir.glob("*.json"):
@@ -66,7 +66,7 @@ def load_completed_ids(run_dir: Path) -> set[str]:
                 with open(result_file) as f:
                     data = json.load(f)
                 if data.get("error") is None:
-                    completed.add(data["sample_id"])
+                    completed.add(data["round_id"])
             except (json.JSONDecodeError, KeyError):
                 pass
 
@@ -134,7 +134,7 @@ def write_summary(run_dir: Path, all_results: list[dict], config: RunConfig) -> 
         "model": config.model.model_name,
         "judge": config.judge.model_name,
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "total_samples": len(all_results),
+        "total_rounds": len(all_results),
         "overall": _agg(scored),
         "errors": errors,
         "by_criterion": _agg(scored)["by_criterion"],

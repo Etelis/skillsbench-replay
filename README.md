@@ -24,13 +24,13 @@ vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8000
 python3 -m venv .venv && source .venv/bin/activate
 pip install openai pyyaml tenacity
 
-# Dry run — shows sample count + estimated tokens
+# Dry run — shows round count + estimated tokens
 python run.py --endpoint http://localhost:8000/v1 --model meta-llama/Llama-3.1-8B-Instruct --dry-run
 
-# Test with a few samples
-python run.py --endpoint http://localhost:8000/v1 --model meta-llama/Llama-3.1-8B-Instruct --max-samples 5
+# Test with a few rounds
+python run.py --endpoint http://localhost:8000/v1 --model meta-llama/Llama-3.1-8B-Instruct --max-rounds 5
 
-# Full run (181 samples)
+# Full run (181 rounds)
 python run.py --endpoint http://localhost:8000/v1 --model meta-llama/Llama-3.1-8B-Instruct
 ```
 
@@ -54,7 +54,7 @@ python benchmarks/skillsbench-replay/run.py \
 ## How it works
 
 ```
-For each of the 181 samples:
+For each of the 181 rounds:
   1. Send the prompt (conversation history) to the eval model (vLLM)
   2. Get the candidate completion
   3. Judge evaluates candidate vs reference on 4 criteria (one LLM call each)
@@ -90,7 +90,7 @@ Each judge call follows the pattern: task context → reference response → can
 python run.py \
   --endpoint http://localhost:8000/v1 \
   --model meta-llama/Llama-3.1-8B-Instruct \
-  --max-samples 20
+  --max-rounds 20
 ```
 
 Use a separate judge model/endpoint:
@@ -127,7 +127,7 @@ judge:
   temperature: 0.0
   max_tokens: 2048
 
-data_path: data/samples/all-solved.jsonl
+data_path: data/rounds/all-solved.jsonl
 max_concurrent: 10
 output_dir: results
 ```
@@ -137,7 +137,7 @@ output_dir: results
 ```yaml
 filter_tasks: ["dialogue-parser", "flood-risk-analysis"]  # specific tasks only
 filter_turns: [0]                                          # first turn only
-max_samples: 20                                            # cap total samples
+max_rounds: 20                                            # cap total rounds
 ```
 
 ## Results
@@ -148,26 +148,26 @@ Results are written to `results/{run_name}/`:
 results/eval-llama-3.1-8b-instruct/
 ├── config.yaml                          # Config snapshot
 ├── summary.json                         # Aggregate scores (overall, by-task, by-turn)
-└── samples/
+└── rounds/
     └── {task_name}/
-        └── {sample_id}.json             # Per-sample: candidate, verdict, reasoning
+        └── {round_id}.json             # Per-round: candidate, verdict, reasoning
 ```
 
-Runs are **resumable** — restarting with the same config skips already-completed samples.
+Runs are **resumable** — restarting with the same config skips already-completed rounds.
 
 ## Data
 
 | Directory | Contents |
 |-----------|----------|
-| `data/samples/all-solved.jsonl` | 181 prompt/completion samples (8.5MB) |
+| `data/rounds/all-solved.jsonl` | 181 prompt/completion rounds (8.5MB) |
 | `data/raw-trajectories/` | Original agent trajectories from 13 solved tasks |
-| `scripts/trajectory_to_samples.py` | Script to convert trajectories into JSONL samples |
+| `scripts/trajectory_to_samples.py` | Script to convert trajectories into JSONL rounds |
 
-### Tasks included (13 tasks, 181 samples)
+### Tasks included (13 tasks, 181 rounds)
 
 All tasks were successfully solved by Haiku 4.5 on SkillsBench.
 
-| Task | Samples | Reward |
+| Task | Rounds | Reward |
 |------|---------|--------|
 | protein-expression-analysis | 33 | 1.000 |
 | hvac-control | 21 | 1.000 |

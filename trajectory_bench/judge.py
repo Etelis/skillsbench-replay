@@ -25,7 +25,7 @@ import re
 from dataclasses import dataclass
 
 from .config import JudgeConfig
-from .data import Sample
+from .data import Round
 from .llm import judge_call
 
 CRITERIA = {
@@ -145,16 +145,16 @@ def _truncate(text: str, limit: int = 4000) -> str:
 
 
 def _build_criterion_prompt(
-    sample: Sample, reference: str, candidate: str, criterion_key: str
+    round_data: Round, reference: str, candidate: str, criterion_key: str
 ) -> str:
     criterion = CRITERIA[criterion_key]
-    last_user_msgs = [m for m in sample.prompt if m["role"] == "user"]
+    last_user_msgs = [m for m in round_data.prompt if m["role"] == "user"]
     last_user = last_user_msgs[-1]["content"] if last_user_msgs else ""
 
     return CRITERION_PROMPT.format(
-        task_name=sample.metadata["task_name"],
-        turn=sample.metadata["turn"] + 1,
-        total_turns=sample.metadata["total_turns"],
+        task_name=round_data.metadata["task_name"],
+        turn=round_data.metadata["turn"] + 1,
+        total_turns=round_data.metadata["total_turns"],
         last_user_message=_truncate(last_user),
         reference=_truncate(reference),
         candidate=_truncate(candidate),
@@ -188,14 +188,14 @@ def _parse_criterion_verdict(text: str) -> tuple[str, str]:
 
 
 async def judge_compare(
-    config: JudgeConfig, sample: Sample, reference: str, candidate: str
+    config: JudgeConfig, round_data: Round, reference: str, candidate: str
 ) -> JudgeResult:
     """Evaluate candidate against reference on all criteria independently."""
     criteria_results: dict[str, CriterionResult] = {}
     total_usage = {"input_tokens": 0, "output_tokens": 0}
 
     for criterion_key in CRITERIA:
-        prompt = _build_criterion_prompt(sample, reference, candidate, criterion_key)
+        prompt = _build_criterion_prompt(round_data, reference, candidate, criterion_key)
         response_text, usage = await judge_call(config, prompt)
 
         verdict, reasoning = _parse_criterion_verdict(response_text)
