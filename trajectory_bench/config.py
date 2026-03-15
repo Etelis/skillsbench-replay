@@ -6,12 +6,12 @@ import yaml
 
 @dataclass
 class ModelConfig:
-    provider: str = "anthropic"  # "anthropic" or "openai" (includes vLLM)
-    model_name: str = "claude-haiku-4-5-20251001"
+    provider: str = "openai"  # "openai" (vLLM, TGI, etc.) or "anthropic"
+    model_name: str = "meta-llama/Llama-3.1-8B-Instruct"
     temperature: float = 0.7
     max_tokens: int = 8192
-    base_url: str | None = None  # For vLLM/OpenAI-compatible endpoints
-    api_key: str | None = None   # Override API key (defaults to env var)
+    base_url: str | None = "http://localhost:8000/v1"  # vLLM endpoint
+    api_key: str | None = None  # Override API key (defaults to env var)
 
 
 @dataclass

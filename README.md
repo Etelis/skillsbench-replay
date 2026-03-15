@@ -1,53 +1,46 @@
 # skillsbench-replay
 
-Evaluate small and lightweight models on [SkillsBench](https://github.com/harbor-ai/skillsbench) tasks — without running any tools or environments.
+Evaluate small and self-hosted models on [SkillsBench](https://github.com/harbor-ai/skillsbench) tasks — without running any tools or environments. Designed for models served via **vLLM**.
 
 ## Motivation
 
-Running SkillsBench end-to-end requires Docker containers, tool execution, and environment setup for each task. This makes it expensive and slow to evaluate smaller or self-hosted models.
+Running SkillsBench end-to-end requires Docker containers, tool execution, and environment setup for each task. This makes it impractical to evaluate smaller or self-hosted models.
 
 **skillsbench-replay** takes a different approach: we first ran SkillsBench with Haiku 4.5 (itself a relatively weak model) and kept only the tasks it solved successfully. From those solved runs, we extracted the full agent trajectories — every prompt the model received and every response it produced.
 
-Now, to evaluate a new model, we simply **replay the prompts** and use an **LLM-as-judge** to check if the new model's responses are functionally equivalent to the known-good ones. No tools, no Docker, no environment setup — just inference.
-
-This lets you benchmark models that are too small or too slow for full agentic evaluation, including locally-served models via **vLLM** or any OpenAI-compatible endpoint.
+To evaluate a new model, we **replay the prompts** against it and use an **LLM-as-judge** to check if the responses are functionally equivalent to the known-good ones. No tools, no Docker, no environment setup — just inference. This makes it possible to benchmark models served locally via vLLM on consumer hardware.
 
 ## Quick start
 
-```bash
-# Setup
-python3 -m venv .venv && source .venv/bin/activate
-pip install anthropic openai pyyaml tenacity
+### 1. Serve your model with vLLM
 
-# Dry run (no API calls, shows sample count + estimated tokens)
-python run.py --config configs/eval-haiku.yaml --dry-run
-
-# Run on a few samples
-ANTHROPIC_API_KEY="..." python run.py --config configs/eval-haiku.yaml --max-samples 5
-
-# Full run
-ANTHROPIC_API_KEY="..." python run.py --config configs/eval-haiku.yaml
-```
-
-### With vLLM
-
-Serve your model:
 ```bash
 vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8000
 ```
 
-Evaluate it:
+### 2. Install and run
+
 ```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install anthropic openai pyyaml tenacity
+
+# Dry run — no API calls, shows sample count + estimated tokens
+python run.py --config configs/eval-vllm.yaml --dry-run
+
+# Test with a few samples
+ANTHROPIC_API_KEY="..." python run.py --config configs/eval-vllm.yaml --max-samples 5
+
+# Full run (181 samples)
 ANTHROPIC_API_KEY="..." python run.py --config configs/eval-vllm.yaml
 ```
 
-The eval model hits your local vLLM server while the judge uses Anthropic's API (or you can point the judge at a vLLM instance too).
+The eval model runs against your local vLLM server. Only the judge requires an Anthropic API key (or you can point the judge at a vLLM instance too — see [Configuration](#configuration)).
 
 ## How it works
 
 ```
 For each of the 181 samples:
-  1. Send the prompt (conversation history) to the eval model
+  1. Send the prompt (conversation history) to the eval model (vLLM)
   2. Get the candidate completion
   3. Send reference + candidate to the judge model
   4. Judge scores: equivalent (1.0) | partially_equivalent (0.5) | not_equivalent (0.0)
@@ -61,13 +54,16 @@ The judge evaluates on four criteria:
 
 ## Configuration
 
+### vLLM model (default)
+
 ```yaml
+# configs/eval-vllm.yaml
 run_name: eval-vllm-llama-8b
 
 model:
-  provider: openai              # "anthropic" or "openai" (vLLM, TGI, etc.)
-  model_name: meta-llama/Llama-3.1-8B-Instruct
-  base_url: http://localhost:8000/v1   # vLLM endpoint
+  provider: openai
+  model_name: meta-llama/Llama-3.1-8B-Instruct  # must match vLLM --model
+  base_url: http://localhost:8000/v1
   temperature: 0.7
   max_tokens: 8192
 
@@ -78,16 +74,45 @@ judge:
   max_tokens: 2048
 
 data_path: data/samples/all-solved.jsonl
-filter_tasks: null        # e.g. ["dialogue-parser", "flood-risk-analysis"]
-filter_turns: null        # e.g. [0] for first turn only
-max_samples: null         # cap total samples
-
 max_concurrent: 10
 output_dir: results
-max_retries: 2
 ```
 
-The `openai` provider works with any OpenAI-compatible API: vLLM, TGI, Ollama, Together, etc. Set `base_url` to point at your endpoint.
+### Fully local (vLLM for both model and judge)
+
+```yaml
+model:
+  provider: openai
+  model_name: meta-llama/Llama-3.1-8B-Instruct
+  base_url: http://localhost:8000/v1
+
+judge:
+  provider: openai
+  model_name: meta-llama/Llama-3.1-70B-Instruct
+  base_url: http://localhost:8001/v1   # second vLLM instance
+```
+
+### Anthropic API model
+
+```yaml
+model:
+  provider: anthropic
+  model_name: claude-haiku-4-5-20251001
+
+judge:
+  provider: anthropic
+  model_name: claude-sonnet-4-5-20250929
+```
+
+The `openai` provider works with any OpenAI-compatible API: vLLM, TGI, Ollama, Together, etc. Set `base_url` to your endpoint.
+
+### Filtering options
+
+```yaml
+filter_tasks: ["dialogue-parser", "flood-risk-analysis"]  # specific tasks only
+filter_turns: [0]                                          # first turn only
+max_samples: 20                                            # cap total samples
+```
 
 ## Results
 
@@ -134,8 +159,7 @@ All tasks were successfully solved by Haiku 4.5 on SkillsBench.
 
 ## Estimated cost
 
-A full run (181 samples) uses roughly:
-- ~2M model input tokens + ~100K model output tokens
+For locally-served models (vLLM), only the judge tokens incur API cost:
 - ~290K judge input tokens + ~18K judge output tokens
 
-For locally-served models (vLLM), only the judge tokens incur API cost.
+For a fully local setup (vLLM for both model and judge), there is no API cost.
