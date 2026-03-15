@@ -1,5 +1,4 @@
 import json
-import shutil
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,12 +23,14 @@ def init_run_dir(config: RunConfig) -> Path:
                     "model": {
                         "provider": config.model.provider,
                         "model_name": config.model.model_name,
+                        "base_url": config.model.base_url,
                         "temperature": config.model.temperature,
                         "max_tokens": config.model.max_tokens,
                     },
                     "judge": {
                         "provider": config.judge.provider,
                         "model_name": config.judge.model_name,
+                        "base_url": config.judge.base_url,
                         "temperature": config.judge.temperature,
                         "max_tokens": config.judge.max_tokens,
                     },
@@ -72,6 +73,35 @@ def load_completed_ids(run_dir: Path) -> set[str]:
     return completed
 
 
+def _criterion_stats(results: list[dict], criterion: str) -> dict:
+    passed = 0
+    total = 0
+    for r in results:
+        criteria = r.get("judge_criteria", {})
+        if criteria and criterion in criteria:
+            total += 1
+            if criteria[criterion].get("passed"):
+                passed += 1
+    return {
+        "passed": passed,
+        "total": total,
+        "pass_rate": round(passed / total, 3) if total else 0,
+    }
+
+
+def _agg(results: list[dict]) -> dict:
+    scores = [r["judge_score"] for r in results if r.get("judge_score") is not None]
+    criteria_keys = ["intent", "commands", "analysis", "safety"]
+
+    return {
+        "total": len(results),
+        "mean_score": round(sum(scores) / len(scores), 3) if scores else 0,
+        "by_criterion": {
+            crit: _criterion_stats(results, crit) for crit in criteria_keys
+        },
+    }
+
+
 def write_summary(run_dir: Path, all_results: list[dict], config: RunConfig) -> dict:
     by_task: dict[str, list[dict]] = defaultdict(list)
     by_turn: dict[int, list[dict]] = defaultdict(list)
@@ -87,10 +117,8 @@ def write_summary(run_dir: Path, all_results: list[dict], config: RunConfig) -> 
             errors += 1
             continue
 
-        task = r["task_name"]
-        turn = r["turn"]
-        by_task[task].append(r)
-        by_turn[turn].append(r)
+        by_task[r["task_name"]].append(r)
+        by_turn[r["turn"]].append(r)
 
         mu = r.get("model_usage", {})
         ju = r.get("judge_usage", {})
@@ -98,17 +126,6 @@ def write_summary(run_dir: Path, all_results: list[dict], config: RunConfig) -> 
         total_model_output += mu.get("output_tokens", 0)
         total_judge_input += ju.get("input_tokens", 0)
         total_judge_output += ju.get("output_tokens", 0)
-
-    def _agg(results: list[dict]) -> dict:
-        verdicts = [r["judge_verdict"] for r in results]
-        scores = [r["judge_score"] for r in results]
-        return {
-            "total": len(results),
-            "equivalent": verdicts.count("equivalent"),
-            "partially_equivalent": verdicts.count("partially_equivalent"),
-            "not_equivalent": verdicts.count("not_equivalent"),
-            "mean_score": round(sum(scores) / len(scores), 3) if scores else 0,
-        }
 
     scored = [r for r in all_results if not r.get("error")]
 
@@ -120,6 +137,7 @@ def write_summary(run_dir: Path, all_results: list[dict], config: RunConfig) -> 
         "total_samples": len(all_results),
         "overall": _agg(scored),
         "errors": errors,
+        "by_criterion": _agg(scored)["by_criterion"],
         "by_task": {task: _agg(results) for task, results in sorted(by_task.items())},
         "by_turn": {
             str(turn): _agg(results)

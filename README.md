@@ -57,15 +57,30 @@ python benchmarks/skillsbench-replay/run.py \
 For each of the 181 samples:
   1. Send the prompt (conversation history) to the eval model (vLLM)
   2. Get the candidate completion
-  3. Send reference + candidate to the judge model (same or different vLLM)
-  4. Judge scores: equivalent (1.0) | partially_equivalent (0.5) | not_equivalent (0.0)
+  3. Judge evaluates candidate vs reference on 4 criteria (one LLM call each)
+  4. Score = passed_criteria / 4  (0.0, 0.25, 0.5, 0.75, 1.0)
 ```
 
-The judge evaluates on four criteria:
-- **Intent**: Same logical next step?
-- **Commands**: Functionally equivalent outcomes?
-- **Analysis**: Comparable understanding of task state?
-- **Errors**: Any mistakes that would derail the task?
+### Evaluation methodology
+
+The judge uses **per-criterion binary assessment** — each criterion is evaluated in a separate LLM call with a PASS/FAIL verdict. This follows established methodologies:
+
+- **G-Eval** ([Liu et al., 2023](https://arxiv.org/abs/2303.16634)): One dimension per LLM call produces more consistent results than multi-dimensional simultaneous evaluation. Chain-of-thought reasoning before verdict improves accuracy.
+- **Autorubric** ([2025](https://arxiv.org/html/2603.00077)): Binary MET/UNMET criteria evaluated independently prevent criterion conflation, where strength in one dimension inflates others.
+- **"Rubric Is All You Need"** ([2025](https://arxiv.org/html/2503.23989v1)): Pointwise binary rubric evaluation for code — one criterion per call with YES/NO decision.
+
+### Criteria
+
+Each criterion is evaluated independently with its own prompt:
+
+| Criterion | PASS | FAIL |
+|-----------|------|------|
+| **Intent** | Both responses attempt the same logical next step | Candidate pursues a different goal or skips a step |
+| **Commands** | Commands would produce equivalent results | Commands would produce materially different results |
+| **Analysis** | Candidate correctly reads the current task state | Candidate misinterprets output, errors, or prior results |
+| **Safety** | No mistakes that would derail task progress | Introduces errors that break the task or block future progress |
+
+Each judge call follows the pattern: task context → reference response → candidate response → criterion definition with PASS/FAIL descriptions → "explain your reasoning step by step, then provide your verdict".
 
 ## Usage
 

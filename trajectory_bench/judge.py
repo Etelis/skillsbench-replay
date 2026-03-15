@@ -1,3 +1,25 @@
+"""
+LLM-as-judge evaluation using per-criterion binary assessment.
+
+Methodology based on:
+- G-Eval (Liu et al., 2023): One dimension per LLM call produces more
+  consistent results than multi-dimensional simultaneous evaluation.
+  Chain-of-thought reasoning before verdict improves accuracy.
+  https://arxiv.org/abs/2303.16634
+
+- Autorubric (2025): Binary MET/UNMET criteria evaluated independently
+  via separate LLM calls. Prevents criterion conflation where strength
+  in one dimension inflates others.
+  https://arxiv.org/html/2603.00077
+
+- "Rubric Is All You Need" (2025): Binary pointwise rubric evaluation
+  (PRE) for code — one criterion per call with YES/NO decision.
+  https://arxiv.org/html/2503.23989v1
+
+Each sample is evaluated on 4 independent criteria, each in a separate
+LLM call. The final score is passed_criteria / total_criteria.
+"""
+
 import json
 import re
 from dataclasses import dataclass
@@ -6,18 +28,80 @@ from .config import JudgeConfig
 from .data import Sample
 from .llm import judge_call
 
-JUDGE_PROMPT = """You are evaluating whether two AI agent responses are functionally equivalent.
+CRITERIA = {
+    "intent": {
+        "name": "Intent",
+        "definition": (
+            "Whether both responses attempt the same logical next step in solving the task. "
+            "They should share the same goal for this turn — e.g., both explore a file, "
+            "both install a dependency, both write the same kind of script."
+        ),
+        "pass": (
+            "Both responses aim to accomplish the same thing this turn, even if "
+            "the specific approach differs slightly."
+        ),
+        "fail": (
+            "The candidate pursues a fundamentally different goal or skips/reorders "
+            "a step that the reference considers necessary at this point."
+        ),
+    },
+    "commands": {
+        "name": "Commands",
+        "definition": (
+            "Whether the commands or code in the candidate response would produce "
+            "equivalent outcomes to the reference. Syntax and style may differ — "
+            "what matters is the end result on the filesystem, environment, or task state."
+        ),
+        "pass": (
+            "The commands would produce the same or equivalent results. Minor differences "
+            "in flags, variable names, or ordering are acceptable if the effect is the same."
+        ),
+        "fail": (
+            "The commands would produce materially different results — wrong files, "
+            "missing steps, incorrect arguments, or broken logic."
+        ),
+    },
+    "analysis": {
+        "name": "Analysis",
+        "definition": (
+            "Whether the candidate demonstrates a comparable understanding of the "
+            "current task state. This includes correctly interpreting terminal output, "
+            "error messages, file contents, or prior results."
+        ),
+        "pass": (
+            "The candidate correctly reads the situation and identifies what has been "
+            "done and what remains, even if phrased differently from the reference."
+        ),
+        "fail": (
+            "The candidate misinterprets the current state — e.g., thinks a step "
+            "succeeded when it failed, misreads output, or ignores important information."
+        ),
+    },
+    "safety": {
+        "name": "Safety",
+        "definition": (
+            "Whether the candidate avoids mistakes that would derail task progress. "
+            "This includes destructive commands, incorrect assumptions that compound, "
+            "or actions that would leave the environment in an unrecoverable state."
+        ),
+        "pass": (
+            "The candidate does not introduce errors that would break the task or "
+            "make future progress significantly harder."
+        ),
+        "fail": (
+            "The candidate introduces a clear mistake — e.g., overwrites needed files, "
+            "uses wrong APIs, makes an assumption that will cause failures downstream."
+        ),
+    },
+}
 
-Context: An AI agent is solving a command-line task. Given the same conversation history,
-two different models produced two responses. Determine if the candidate response would lead
-to equivalent progress on the task as the reference response.
+CRITERION_PROMPT = """You are an impartial evaluator assessing an AI agent's response against a specific criterion.
 
 ## Task context
-Task: {task_name}
-Turn: {turn} of {total_turns}
-Reward achieved by reference trajectory: {reward}
+An AI agent is solving a command-line task called "{task_name}".
+This is turn {turn} of {total_turns} in the trajectory.
 
-## Last user message (what the agent is responding to):
+## What the agent is responding to:
 {last_user_message}
 
 ## Reference response (from a successful trajectory):
@@ -26,81 +110,108 @@ Reward achieved by reference trajectory: {reward}
 ## Candidate response (being evaluated):
 {candidate}
 
-## Evaluation criteria:
-1. INTENT: Do both responses attempt the same logical next step?
-2. COMMANDS: Would the commands achieve similar outcomes? (syntax may differ)
-3. ANALYSIS: Is the candidate's understanding of the task state comparable?
-4. ERRORS: Does the candidate make any clear mistakes that would derail the task?
+## Criterion: {criterion_name}
+{criterion_definition}
 
-## Scoring:
-- "equivalent": Candidate would lead to same or better task progress. Commands may differ syntactically but must be functionally equivalent.
-- "partially_equivalent": Candidate is on the right track but misses some aspect (e.g., correct analysis but suboptimal commands).
-- "not_equivalent": Candidate would lead to significantly worse task progress.
+* PASS: {pass_description}
+* FAIL: {fail_description}
 
-Respond ONLY with JSON:
-{{"verdict": "equivalent" | "partially_equivalent" | "not_equivalent", "reasoning": "Brief explanation"}}"""
+First, explain your reasoning step by step. Then provide your verdict.
 
-VERDICT_SCORES = {
-    "equivalent": 1.0,
-    "partially_equivalent": 0.5,
-    "not_equivalent": 0.0,
-}
+Respond in JSON:
+{{"reasoning": "<your step-by-step analysis>", "verdict": "PASS" or "FAIL"}}"""
+
+
+@dataclass
+class CriterionResult:
+    criterion: str
+    verdict: str  # "PASS" or "FAIL"
+    passed: bool
+    reasoning: str
 
 
 @dataclass
 class JudgeResult:
-    verdict: str
-    score: float
-    reasoning: str
+    criteria: dict[str, CriterionResult]
+    score: float  # passed_criteria / total_criteria
     usage: dict
 
 
-def _build_judge_prompt(sample: Sample, reference: str, candidate: str) -> str:
+def _truncate(text: str, limit: int = 4000) -> str:
+    if len(text) <= limit:
+        return text
+    half = limit // 2
+    return text[:half] + "\n...[truncated]...\n" + text[-half:]
+
+
+def _build_criterion_prompt(
+    sample: Sample, reference: str, candidate: str, criterion_key: str
+) -> str:
+    criterion = CRITERIA[criterion_key]
     last_user_msgs = [m for m in sample.prompt if m["role"] == "user"]
     last_user = last_user_msgs[-1]["content"] if last_user_msgs else ""
 
-    if len(last_user) > 4000:
-        last_user = last_user[:2000] + "\n...[truncated]...\n" + last_user[-2000:]
-
-    return JUDGE_PROMPT.format(
+    return CRITERION_PROMPT.format(
         task_name=sample.metadata["task_name"],
         turn=sample.metadata["turn"] + 1,
         total_turns=sample.metadata["total_turns"],
-        reward=sample.metadata.get("reward", "N/A"),
-        last_user_message=last_user,
-        reference=reference,
-        candidate=candidate,
+        last_user_message=_truncate(last_user),
+        reference=_truncate(reference),
+        candidate=_truncate(candidate),
+        criterion_name=criterion["name"],
+        criterion_definition=criterion["definition"],
+        pass_description=criterion["pass"],
+        fail_description=criterion["fail"],
     )
 
 
-def _parse_verdict(text: str) -> tuple[str, str]:
+def _parse_criterion_verdict(text: str) -> tuple[str, str]:
     """Parse judge response, return (verdict, reasoning)."""
-    # Try JSON parse
     try:
-        # Find JSON in the response
         match = re.search(r"\{[^{}]*\}", text, re.DOTALL)
         if match:
             data = json.loads(match.group())
-            return data["verdict"], data.get("reasoning", "")
+            verdict = data.get("verdict", "").upper().strip()
+            if verdict in ("PASS", "FAIL"):
+                return verdict, data.get("reasoning", "")
     except (json.JSONDecodeError, KeyError):
         pass
 
-    # Fallback: look for verdict keyword
-    text_lower = text.lower()
-    for verdict in ["equivalent", "partially_equivalent", "not_equivalent"]:
-        if verdict in text_lower:
-            return verdict, text
+    # Fallback: look for PASS/FAIL keywords
+    text_upper = text.upper()
+    if "PASS" in text_upper and "FAIL" not in text_upper:
+        return "PASS", text
+    if "FAIL" in text_upper:
+        return "FAIL", text
 
-    return "not_equivalent", f"Failed to parse judge response: {text[:200]}"
+    return "FAIL", f"Could not parse verdict: {text[:200]}"
 
 
 async def judge_compare(
     config: JudgeConfig, sample: Sample, reference: str, candidate: str
 ) -> JudgeResult:
-    prompt = _build_judge_prompt(sample, reference, candidate)
-    response_text, usage = await judge_call(config, prompt)
+    """Evaluate candidate against reference on all criteria independently."""
+    criteria_results: dict[str, CriterionResult] = {}
+    total_usage = {"input_tokens": 0, "output_tokens": 0}
 
-    verdict, reasoning = _parse_verdict(response_text)
-    score = VERDICT_SCORES.get(verdict, 0.0)
+    for criterion_key in CRITERIA:
+        prompt = _build_criterion_prompt(sample, reference, candidate, criterion_key)
+        response_text, usage = await judge_call(config, prompt)
 
-    return JudgeResult(verdict=verdict, score=score, reasoning=reasoning, usage=usage)
+        verdict, reasoning = _parse_criterion_verdict(response_text)
+        passed = verdict == "PASS"
+
+        criteria_results[criterion_key] = CriterionResult(
+            criterion=criterion_key,
+            verdict=verdict,
+            passed=passed,
+            reasoning=reasoning,
+        )
+
+        total_usage["input_tokens"] += usage.get("input_tokens", 0)
+        total_usage["output_tokens"] += usage.get("output_tokens", 0)
+
+    passed_count = sum(1 for r in criteria_results.values() if r.passed)
+    score = passed_count / len(CRITERIA)
+
+    return JudgeResult(criteria=criteria_results, score=score, usage=total_usage)
