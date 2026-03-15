@@ -6,18 +6,22 @@ import yaml
 
 @dataclass
 class ModelConfig:
-    provider: str = "anthropic"
+    provider: str = "anthropic"  # "anthropic" or "openai" (includes vLLM)
     model_name: str = "claude-haiku-4-5-20251001"
     temperature: float = 0.7
     max_tokens: int = 8192
+    base_url: str | None = None  # For vLLM/OpenAI-compatible endpoints
+    api_key: str | None = None   # Override API key (defaults to env var)
 
 
 @dataclass
 class JudgeConfig:
-    provider: str = "anthropic"
+    provider: str = "anthropic"  # "anthropic" or "openai" (includes vLLM)
     model_name: str = "claude-sonnet-4-5-20250929"
     temperature: float = 0.0
     max_tokens: int = 2048
+    base_url: str | None = None
+    api_key: str | None = None
 
 
 @dataclass
