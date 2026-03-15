@@ -22,19 +22,17 @@ vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8000
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
-pip install anthropic openai pyyaml tenacity
+pip install openai pyyaml tenacity
 
 # Dry run — no API calls, shows sample count + estimated tokens
 python run.py --config configs/eval-vllm.yaml --dry-run
 
 # Test with a few samples
-ANTHROPIC_API_KEY="..." python run.py --config configs/eval-vllm.yaml --max-samples 5
+python run.py --config configs/eval-vllm.yaml --max-samples 5
 
 # Full run (181 samples)
-ANTHROPIC_API_KEY="..." python run.py --config configs/eval-vllm.yaml
+python run.py --config configs/eval-vllm.yaml
 ```
-
-The eval model runs against your local vLLM server. Only the judge requires an Anthropic API key (or you can point the judge at a vLLM instance too — see [Configuration](#configuration)).
 
 ## How it works
 
@@ -54,7 +52,7 @@ The judge evaluates on four criteria:
 
 ## Configuration
 
-### vLLM model (default)
+### Single vLLM instance (model and judge on same server)
 
 ```yaml
 # configs/eval-vllm.yaml
@@ -68,8 +66,9 @@ model:
   max_tokens: 8192
 
 judge:
-  provider: anthropic
-  model_name: claude-sonnet-4-5-20250929
+  provider: openai
+  model_name: meta-llama/Llama-3.1-8B-Instruct
+  base_url: http://localhost:8000/v1
   temperature: 0.0
   max_tokens: 2048
 
@@ -78,7 +77,7 @@ max_concurrent: 10
 output_dir: results
 ```
 
-### Fully local (vLLM for both model and judge)
+### Separate model and judge (two vLLM instances)
 
 ```yaml
 model:
@@ -90,18 +89,6 @@ judge:
   provider: openai
   model_name: meta-llama/Llama-3.1-70B-Instruct
   base_url: http://localhost:8001/v1   # second vLLM instance
-```
-
-### Anthropic API model
-
-```yaml
-model:
-  provider: anthropic
-  model_name: claude-haiku-4-5-20251001
-
-judge:
-  provider: anthropic
-  model_name: claude-sonnet-4-5-20250929
 ```
 
 The `openai` provider works with any OpenAI-compatible API: vLLM, TGI, Ollama, Together, etc. Set `base_url` to your endpoint.
@@ -157,9 +144,10 @@ All tasks were successfully solved by Haiku 4.5 on SkillsBench.
 | threejs-structure-parser | 6 | 1.000 |
 | gravitational-wave-detection | 5 | 1.000 |
 
-## Estimated cost
+## Estimated tokens
 
-For locally-served models (vLLM), only the judge tokens incur API cost:
-- ~290K judge input tokens + ~18K judge output tokens
+A full run (181 samples) uses roughly:
+- Model: ~2M input tokens + ~100K output tokens
+- Judge: ~290K input tokens + ~18K output tokens
 
-For a fully local setup (vLLM for both model and judge), there is no API cost.
+With vLLM, this is all local compute — no API cost.
