@@ -14,6 +14,7 @@ async def _eval_round(
     config: RunConfig,
     semaphore: asyncio.Semaphore,
     progress: dict,
+    run_dir=None,
 ) -> dict:
     async with semaphore:
         start = time.time()
@@ -56,6 +57,10 @@ async def _eval_round(
 
         result["duration_sec"] = round(time.time() - start, 2)
 
+        # Write immediately so results survive interruption
+        if run_dir:
+            write_round_result(run_dir, result)
+
         progress["done"] += 1
         if result.get("judge_criteria"):
             passed = [k for k, r in result["judge_criteria"].items() if r["passed"]]
@@ -65,7 +70,8 @@ async def _eval_round(
         print(
             f"  [{progress['done']}/{progress['total']}] "
             f"{round_data.metadata['task_name']} turn {round_data.metadata['turn']} "
-            f"→ {status}"
+            f"→ {status}",
+            flush=True,
         )
 
         return result
@@ -138,16 +144,12 @@ async def run(config: RunConfig) -> dict:
         print_summary_table(summary)
         return summary
 
-    print(f"Evaluating {len(pending)} rounds (concurrency={config.max_concurrent})")
+    print(f"Evaluating {len(pending)} rounds (concurrency={config.max_concurrent})", flush=True)
     semaphore = asyncio.Semaphore(config.max_concurrent)
     progress = {"done": 0, "total": len(pending)}
 
-    tasks = [_eval_round(r, config, semaphore, progress) for r in pending]
+    tasks = [_eval_round(r, config, semaphore, progress, run_dir=run_dir) for r in pending]
     new_results = await asyncio.gather(*tasks)
-
-    # Write per-round results
-    for result in new_results:
-        write_round_result(run_dir, result)
 
     # Collect all results (existing + new) for summary
     all_results = list(new_results)

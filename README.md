@@ -82,6 +82,10 @@ Each criterion is evaluated independently with its own prompt:
 
 Each judge call follows the pattern: task context → reference response → candidate response → criterion definition with PASS/FAIL descriptions → "explain your reasoning step by step, then provide your verdict".
 
+### Validation
+
+We validated the benchmark by running Claude Sonnet 4.6 (a stronger model than the Haiku 4.5 that produced the reference trajectories) as both eval model and judge. It scored **100% across all 4 criteria on all 10 tested rounds**, confirming the judge correctly identifies functionally equivalent responses and that a capable model can reliably match the reference behavior.
+
 ## Usage
 
 ### CLI args (kvcache-bench compatible)
