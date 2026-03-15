@@ -84,7 +84,7 @@ Each judge call follows the pattern: task context → reference response → can
 
 ### Validation
 
-We validated the benchmark by running Claude Sonnet 4.6 (a stronger model than the Haiku 4.5 that produced the reference trajectories) as both eval model and judge. It scored **100% across all 4 criteria on all 10 tested rounds**, confirming the judge correctly identifies functionally equivalent responses and that a capable model can reliably match the reference behavior.
+We validated the benchmark by running Claude Sonnet 4.6 (a stronger model than the Haiku 4.5 that produced the reference trajectories) as both eval model and judge. It scored **100% across all 4 criteria on all tested rounds**, confirming the judge correctly identifies functionally equivalent responses and that a capable model can reliably match the reference behavior.
 
 ## Usage
 
