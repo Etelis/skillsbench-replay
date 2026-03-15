@@ -1,0 +1,86 @@
+New Terminal Output:
+-rw-r--r-- 1 root root 7.1K Mar 12 12:12 calibration_log.json
+-rw-r--r-- 1 root root  48K Mar 12 12:12 control_log.json
+-rw-r--r-- 1 root root  133 Mar 12 12:12 estimated_params.json
+-rw-r--r-- 1 root root  152 Mar 12 12:12 metrics.json
+-rw-r--r-- 1 root root  130 Mar  9 09:40 room_config.json
+-rw-r--r-- 1 root root  102 Mar 12 12:12 tuned_gains.json
+
+=== calibration_log.json ===
+{
+  "phase": "calibration",
+  "heater_power_test": 50.0,
+  "data": [
+    {
+      "time": 0.5,
+      "temperature": 18.0934,
+      "heater_power": 50.0
+    },
+    {
+      "time": 1.0,
+      "temperature": 18.0593,
+      "heater_power": 50.0
+    },
+    {
+      "time": 1.5,
+      "temperature": 18.3641,
+      "heater_power": 50.0
+    },
+    {
+
+=== estimated_params.json ===
+{
+  "K": 0.11904412255823851,
+  "tau": 41.024168430361996,
+  "r_squared": 0.987350476324636,
+  "fitting_error": 0.12162564567022568
+}
+
+=== tuned_gains.json ===
+{
+  "Kp": 33.60098687814788,
+  "Ki": 0.8190534546772137,
+  "Kd": 0.0,
+  "lambda": 10.256042107590499
+}
+
+=== control_log.json ===
+{
+  "phase": "control",
+  "setpoint": 22.0,
+  "data": [
+    {
+      "time": 1.0,
+      "temperature": 18.0704,
+      "setpoint": 22.0,
+      "heater_power": 100,
+      "error": 4.022500000000001
+    },
+    {
+      "time": 2.0,
+      "temperature": 18.2542,
+      "setpoint": 22.0,
+      "heater_power": 100,
+      "error": 3.8217
+    },
+    {
+      "time": 3.0,
+      "temperature": 18.3671,
+      "setpoint": 22.0,
+      "heater_power": 100,
+      "error": 3.7276999999999987
+    },
+    {
+      "time": 4.0,
+      "temperature": 18.4754,
+      "setpoint": 22.0,
+      "heater_power": 100,
+
+=== metrics.json ===
+{
+  "rise_time": 85.0,
+  "overshoot": 0.0359324104234531,
+  "settling_time": 223.0,
+  "steady_state_error": 0.10706666666666666,
+  "max_temp": 22.1412
+}

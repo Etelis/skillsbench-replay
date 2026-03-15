@@ -1,0 +1,14 @@
+Great! All input files exist. Now let me extract the keyframes from the video using FFmpeg.
+
+```json
+{
+  "analysis": "All required files are present: the video file (15MB) and the three template images (coin.png, enemy.png, turtle.png). Now I need to extract keyframes from the video. I'll use the ffmpeg skill to extract I-frames and save them as keyframes_001.png, keyframes_002.png, etc. in the /root directory.",
+  "plan": "Use FFmpeg to extract keyframes from the super-mario.mp4 video. I'll use the select filter to extract only I-frames (keyframes) with variable frame rate to avoid duplicates. The output will be saved as /root/keyframes_%03d.png which will create files like keyframes_001.png, keyframes_002.png, etc.",
+  "commands": [
+    {
+      "keystrokes": "ffmpeg -i /root/super-mario.mp4 -vf \"select='eq(pict_type,I)'\" -vsync vfr /root/keyframes_%03d.png\n",
+      "duration": 5.0
+    }
+  ]
+}
+```

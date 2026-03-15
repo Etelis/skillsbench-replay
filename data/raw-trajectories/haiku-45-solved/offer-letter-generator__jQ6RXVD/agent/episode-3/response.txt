@@ -1,0 +1,15 @@
+Great! The script executed successfully. Now let me verify that the output file was created correctly and check its contents to ensure all placeholders were replaced and the conditional section was handled properly.
+
+```json
+{
+  "analysis": "The script ran successfully and saved the offer letter to /root/offer_letter_filled.docx. Now I need to verify that: 1) The file was created, 2) All placeholders were replaced with actual values, 3) The conditional {{IF_RELOCATION}} section was properly handled (markers removed, content kept since RELOCATION_PACKAGE is 'Yes'), 4) The document is readable and properly formatted.",
+  "plan": "I'll write a verification script that: 1) Confirms the output file exists, 2) Loads the filled document, 3) Displays all paragraphs to verify placeholders are replaced, 4) Checks that the relocation section is properly formatted without markers, 5) Confirms no remaining {{PLACEHOLDER}} patterns exist.",
+  "commands": [
+    {
+      "keystrokes": "python3 << 'EOF'\nfrom docx import Document\nimport os\nimport re\n\n# Check file exists\nif os.path.exists('/root/offer_letter_filled.docx'):\n    print(\"✓ Output file exists\")\n    print(f\"  File size: {os.path.getsize('/root/offer_letter_filled.docx')} bytes\")\nelse:\n    print(\"✗ Output file not found\")\n    exit(1)\n\n# Load and verify the filled document\ndoc = Document('/root/offer_letter_filled.docx')\n\nprint(\"\\n=== VERIFICATION: FILLED DOCUMENT ===\")\nplaceholder_pattern = r'\\{\\{[A-Z_]+\\}\\}'\nfound_placeholders = []\n\nfor i, para in enumerate(doc.paragraphs):\n    if para.text.strip():\n        print(f\"Para {i}: {para.text}\")\n        matches = re.findall(placeholder_pattern, para.text)\n        if matches:\n            found_placeholders.extend(matches)\n\nprint(\"\\n=== TABLE CONTENTS ===\")\nfor t_idx, table in enumerate(doc.tables):\n    print(f\"Table {t_idx}:\")\n    for r_idx, row in enumerate(table.rows):\n        for c_idx, cell in enumerate(row.cells):\n            if cell.text.strip():\n                print(f\"  Cell [{r_idx},{c_idx}]: {cell.text}\")\n                matches = re.findall(placeholder_pattern, cell.text)\n                if matches:\n                    found_placeholders.extend(matches)\n\nprint(\"\\n=== VERIFICATION SUMMARY ===\")\nif found_placeholders:\n    print(f\"✗ Found {len(found_placeholders)} unreplaced placeholders:\")\n    for ph in set(found_placeholders):\n        print(f\"  - {ph}\")\nelse:\n    print(\"✓ No unreplaced placeholders found\")\n\n# Check for conditional markers\nfull_text = '\\n'.join([p.text for p in doc.paragraphs])\nif '{{IF_RELOCATION}}' in full_text or '{{END_IF_RELOCATION}}' in full_text:\n    print(\"✗ Conditional markers still present\")\nelse:\n    print(\"✓ Conditional markers properly removed\")\n\nif 'relocation package' in full_text.lower():\n    print(\"✓ Relocation content preserved (RELOCATION_PACKAGE is Yes)\")\n\nEOF\n",
+      "duration": 1.0
+    }
+  ],
+  "task_complete": false
+}
+```

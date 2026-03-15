@@ -1,0 +1,42 @@
+New Terminal Output:
+{
+  "status": "errors_found",
+  "total_errors": 64,
+  "error_summary": {
+    "#DIV/0!": {
+      "count": 60,
+      "locations": [
+        "Task!C24",
+        "Task!D24",
+        "Task!E24",
+        "Task!F24",
+        "Task!G24",
+        "Task!H24",
+        "Task!I24",
+        "Task!J24",
+        "Task!K24",
+        "Task!L24",
+        "Task!C25",
+        "Task!D25",
+        "Task!E25",
+        "Task!F25",
+        "Task!G25",
+        "Task!H25",
+        "Task!I25",
+        "Task!J25",
+        "Task!K25",
+        "Task!L25"
+      ]
+    },
+    "#NAME?": {
+      "count": 4,
+      "locations": [
+        "Task!O28",
+        "Task!O29",
+        "Task!O30",
+        "Task!O31"
+      ]
+    }
+  },
+  "total_formulas": 164
+}

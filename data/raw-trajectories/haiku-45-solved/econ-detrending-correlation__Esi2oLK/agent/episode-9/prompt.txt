@@ -1,0 +1,71 @@
+New Terminal Output:
+Rows 5-75 (showing column 0 - year/quarter identifier):
+Row 5: 1973.
+Row 6: 1974.
+Row 7: 1975.
+Row 8: 1976.
+Row 9: 1977.
+Row 10: 1978.
+Row 11: 1979.
+Row 12: 1980.
+Row 13: 1981.
+Row 14: 1982.
+Row 15: 1983.
+Row 16: 1984.
+Row 17: 1985.
+Row 18: 1986.
+Row 19: 1987.
+Row 20: 1988.
+Row 21: 1989.
+Row 22: 1990.
+Row 23: 1991.
+Row 24: 1992. 
+Row 25: 1993.
+Row 26: 1994.
+Row 27: 1995.
+Row 28: 1996.
+Row 29: 1997.
+Row 30: 1998.
+Row 31: 1999.
+Row 32: 2000.
+Row 33: 2001.
+Row 34: 2002.
+Row 35: 2003.
+Row 36: 2004.
+Row 37: 2005.
+Row 38: 2006.
+Row 39: 2007.
+Row 40: 2008.
+Row 41: 2009.
+Row 42: 2010.
+Row 43: 2011.
+Row 44: 2012.
+Row 45: 2013.
+Row 46: 2014.
+Row 47: 2015.
+Row 48: 2016.
+Row 49: 2017.
+Row 50: 2018.
+Row 51: 2019.
+Row 52: 2020.
+Row 53: 2021.
+Row 54: 2022.
+Row 55: 2023.
+Row 56: 2021: I.
+Row 57:     II.
+Row 58:     III.
+Row 59:     IV.
+Row 60: 2022: I.
+Row 61:     II.
+Row 62:     III.
+Row 63:     IV.
+Row 64: 2023: I.
+Row 65:     II.
+Row 66:     III.
+Row 67:     IV.
+Row 68: 2024: I.
+Row 69:     II.
+Row 70:     III p.
+Row 71: 1 Includes other items not shown separately.
+Row 72: 2 Food consists of food and beverages purchased for off-premises consumption; food services, which include purchased meals and beverages, are not classified as food. 
+Row 73: Source: Department of Commerce (Bureau of Economic Analysis).

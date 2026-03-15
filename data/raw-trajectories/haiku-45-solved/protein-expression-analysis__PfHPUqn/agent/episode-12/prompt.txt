@@ -1,0 +1,17 @@
+New Terminal Output:
+=== Comparing protein IDs ===
+
+Task row 11: 'sp|Q9HCY8|S10AE_HUMAN'
+  Length: 21
+  Repr: 'sp|Q9HCY8|S10AE_HUMAN'
+  MATCH found at Data row 2
+
+Task row 12: 'sp|Q96EN8|MOCOS_HUMAN'
+  Length: 21
+  Repr: 'sp|Q96EN8|MOCOS_HUMAN'
+  MATCH found at Data row 3
+
+=== Testing sample name matching ===
+Task C10: 'NCIH1568_LUNG_TenPx15'
+  Repr: 'NCIH1568_LUNG_TenPx15'
+  MATCH found at Data col 4

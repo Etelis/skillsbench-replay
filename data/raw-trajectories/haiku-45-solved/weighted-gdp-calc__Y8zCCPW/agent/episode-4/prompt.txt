@@ -1,0 +1,35 @@
+New Terminal Output:
+Data sheet header row (row 4):
+Column A: Database
+Column B: Series_code
+Column C: Country
+Column D: Indicator
+Column E: Indicator.Name
+Column F: Frequency
+Column G: Scale
+Column H: 2018
+Column I: 2019
+Column J: 2020
+Column K: 2021
+Column L: 2022
+Column M: 2023
+
+Data sheet series codes:
+Row 21: 419BXGS_BP6.A - Bahrain
+Row 22: 443BXGS_BP6.A - Kuwait
+Row 23: 449BXGS_BP6.A - Oman
+Row 24: 453BXGS_BP6.A - Qatar
+Row 25: 456BXGS_BP6.A - Saudi Arabia
+Row 26: 466BXGS_BP6.A - United Arab Emirates
+Row 28: 419BMGS_BP6.A - Bahrain
+Row 29: 443BMGS_BP6.A - Kuwait
+Row 30: 449BMGS_BP6.A - Oman
+Row 31: 453BMGS_BP6.A - Qatar
+Row 32: 456BMGS_BP6.A - Saudi Arabia
+Row 33: 466BMGS_BP6.A - United Arab Emirates
+Row 35: 419NGDPD.A - Bahrain
+Row 36: 443NGDPD.A - Kuwait
+Row 37: 449NGDPD.A - Oman
+Row 38: 453NGDPD.A - Qatar
+Row 39: 456NGDPD.A - Saudi Arabia
+Row 40: 466NGDPD.A - United Arab Emirates

@@ -1,0 +1,100 @@
+{
+  "job_name": "haiku-45-solved",
+  "jobs_dir": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/skillsbench-trajectories/jobs",
+  "n_attempts": 1,
+  "timeout_multiplier": 1.0,
+  "agent_timeout_multiplier": null,
+  "verifier_timeout_multiplier": null,
+  "agent_setup_timeout_multiplier": null,
+  "environment_build_timeout_multiplier": null,
+  "debug": false,
+  "orchestrator": {
+    "type": "local",
+    "n_concurrent_trials": 8,
+    "quiet": false,
+    "retry": {
+      "max_retries": 0,
+      "include_exceptions": null,
+      "exclude_exceptions": [
+        "RewardFileEmptyError",
+        "RewardFileNotFoundError",
+        "VerifierTimeoutError",
+        "VerifierOutputParseError",
+        "AgentTimeoutError"
+      ],
+      "wait_multiplier": 1.0,
+      "min_wait_sec": 1.0,
+      "max_wait_sec": 60.0
+    },
+    "kwargs": {}
+  },
+  "environment": {
+    "type": "docker",
+    "import_path": null,
+    "force_build": false,
+    "delete": true,
+    "override_cpus": null,
+    "override_memory_mb": null,
+    "override_storage_mb": null,
+    "override_gpus": null,
+    "suppress_override_warnings": false,
+    "kwargs": {}
+  },
+  "verifier": {
+    "override_timeout_sec": null,
+    "max_timeout_sec": null,
+    "disable": false
+  },
+  "metrics": [],
+  "agents": [
+    {
+      "name": "terminus-2-skills",
+      "import_path": "libs.terminus_agent.agents.terminus_2.harbor_terminus_2_skills:HarborTerminus2WithSkills",
+      "model_name": "anthropic/claude-haiku-4-5-20251001",
+      "override_timeout_sec": null,
+      "override_setup_timeout_sec": null,
+      "max_timeout_sec": null,
+      "kwargs": {},
+      "env": {}
+    }
+  ],
+  "datasets": [
+    {
+      "task_names": null,
+      "exclude_task_names": [
+        "3d-scan-calc",
+        "civ6-adjacency-optimizer",
+        "dapt-intrusion-detection",
+        "earthquake-phase-association",
+        "energy-market-pricing",
+        "enterprise-information-search",
+        "financial-modeling-qa",
+        "fix-druid-loophole-cve",
+        "fix-erlang-ssh-cve",
+        "fix-visual-stability",
+        "flink-query",
+        "glm-lake-mendota",
+        "invoice-fraud-detection",
+        "jpg-ocr-stat",
+        "mars-clouds-clustering",
+        "mhc-layer-impl",
+        "pedestrian-traffic-counting",
+        "react-performance-debugging",
+        "sec-financial-report",
+        "seismic-phase-picking",
+        "shock-analysis-supply",
+        "simpo-code-reproduction",
+        "speaker-diarization-subtitles",
+        "spring-boot-jakarta-migration",
+        "taxonomy-tree-merge",
+        "trend-anomaly-causal-inference",
+        "video-silence-remover",
+        "video-tutorial-indexer"
+      ],
+      "n_tasks": null,
+      "path": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/tasks"
+    }
+  ],
+  "tasks": [],
+  "artifacts": []
+}

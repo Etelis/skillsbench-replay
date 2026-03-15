@@ -1,0 +1,28 @@
+New Terminal Output:
+=== Values in Exports (H12:L12) ===
+H12: United Arab Emirates (type: str)
+I12: BXGS_BP6 (type: str)
+J12: Balance of Payments, Current Account, Goods and Services, Credit (BPM6) (type: str)
+K12: Annual (type: str)
+L12: Billions (type: str)
+
+=== Values in Imports (H19:L19) ===
+H19: United Arab Emirates (type: str)
+I19: BMGS_BP6 (type: str)
+J19: Balance of Payments, Current Account, Goods and Services, Debit (BPM6) (type: str)
+K19: Annual (type: str)
+L19: Billions (type: str)
+
+=== Values in GDP (H26:L26) ===
+H26: United Arab Emirates (type: str)
+I26: NGDPD (type: str)
+J26: Gross domestic product in US dollars (type: str)
+K26: Annual (type: str)
+L26: Billions (type: str)
+
+=== Net Exports formulas (H35:L35) ===
+H35: =(H12-H19)/H26*100
+I35: =(I12-I19)/I26*100
+J35: =(J12-J19)/J26*100
+K35: =(K12-K19)/K26*100
+L35: =(L12-L19)/L26*100

@@ -1,0 +1,103 @@
+{
+    "id": "445b5653-e423-4f84-927e-c71419205c50",
+    "task_name": "hvac-control",
+    "trial_name": "hvac-control__8jtTZQX",
+    "trial_uri": "file:///Users/itayetlis/Desktop/Work/Repos/skillsbench/skillsbench-trajectories/jobs/haiku-45-easy-medium/hvac-control__8jtTZQX",
+    "task_id": {
+        "path": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/tasks/hvac-control"
+    },
+    "source": "tasks",
+    "task_checksum": "b404b7ee0012df4d7df82013b5fd2d05bd3420da009e8af9b3580da790151b1c",
+    "config": {
+        "task": {
+            "path": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/tasks/hvac-control",
+            "git_url": null,
+            "git_commit_id": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "tasks"
+        },
+        "trial_name": "hvac-control__8jtTZQX",
+        "trials_dir": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/skillsbench-trajectories/jobs/haiku-45-easy-medium",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "terminus-2-skills",
+            "import_path": "libs.terminus_agent.agents.terminus_2.harbor_terminus_2_skills:HarborTerminus2WithSkills",
+            "model_name": "anthropic/claude-haiku-4-5-20251001",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "f504817d-c10e-4614-bc6c-b34ebc447f33"
+    },
+    "agent_info": {
+        "name": "terminus-2-skills",
+        "version": "2.0.0",
+        "model_info": {
+            "name": "claude-haiku-4-5-20251001",
+            "provider": "anthropic"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 507822,
+        "n_cache_tokens": null,
+        "n_output_tokens": 31285,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": {
+            "skills_loaded": [
+                "first-order-model-fitting",
+                "imc-tuning-rules"
+            ],
+            "references_loaded": []
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-03-12T12:02:20.249346Z",
+    "finished_at": "2026-03-12T12:15:00.872794Z",
+    "environment_setup": {
+        "started_at": "2026-03-12T12:02:20.251883Z",
+        "finished_at": "2026-03-12T12:03:53.252240Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-03-12T12:03:53.252277Z",
+        "finished_at": "2026-03-12T12:05:25.635293Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-03-12T12:05:25.635386Z",
+        "finished_at": "2026-03-12T12:14:47.593353Z"
+    },
+    "verifier": {
+        "started_at": "2026-03-12T12:14:47.593517Z",
+        "finished_at": "2026-03-12T12:14:57.884736Z"
+    }
+}

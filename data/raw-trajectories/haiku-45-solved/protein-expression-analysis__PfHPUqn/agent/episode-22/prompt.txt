@@ -1,0 +1,6 @@
+New Terminal Output:
+=== Rewriting formulas with explicit column ranges ===
+Sample formula for C11:
+=IFERROR(INDEX('Data'.$D$2:$AZ$201,MATCH($A11,'Data'.$A$2:$A$201,0),MATCH(C$10,'Data'.$D$1:$AZ$1,0)),"")
+
+=== File saved ===

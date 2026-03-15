@@ -1,0 +1,16 @@
+New Terminal Output:
+Current content in rows 42-50:
+C42: Gulf Cooperation Council (GCC)
+E42: Net exports, percent of GDP, min
+C43: Gulf Cooperation Council (GCC)
+E43: Net exports, percent of GDP, max
+C44: Gulf Cooperation Council (GCC)
+E44: Net exports, percent of GDP, median
+C45: Gulf Cooperation Council (GCC)
+E45: Net exports, percent of GDP, simple mean
+C46: Gulf Cooperation Council (GCC)
+E46: Net exports, percent of GDP, 25-th percentile 
+C47: Gulf Cooperation Council (GCC)
+E47: Net exports, percent of GDP, 75-th percentile 
+C50: Gulf Cooperation Council (GCC)
+E50: Net exports, percent of GDP, weighted mean

@@ -1,0 +1,89 @@
+New Terminal Output:
+Loaded 79 station IDs
+Downloading NWS flood thresholds...
+Downloaded 12558 NWS stations
+Found thresholds for 79 Michigan stations
+[1/79] Processing 04031000... No flooding
+[2/79] Processing 04036000... No flooding
+[3/79] Processing 04040000... No flooding
+[4/79] Processing 04040500... No flooding
+[5/79] Processing 04041500... No flooding
+[6/79] Processing 04043050... No flooding
+[7/79] Processing 04043150... No flooding
+[8/79] Processing 04045500... No flooding
+[9/79] Processing 04057510... No flooding
+[10/79] Processing 04057800... No flooding
+[11/79] Processing 04058200... No flooding
+[12/79] Processing 04059000... No flooding
+[13/79] Processing 04059500... No flooding
+[14/79] Processing 04060500... No flooding
+[15/79] Processing 04062500... No flooding
+[16/79] Processing 04063522... No flooding
+[17/79] Processing 04065722... No flooding
+[18/79] Processing 04066030... No flooding
+[19/79] Processing 04066800... No flooding
+[20/79] Processing 04096405... No flooding
+[21/79] Processing 04097500... Flooding detected: 4 days
+[22/79] Processing 04099000... No flooding
+[23/79] Processing 04101500... No flooding
+[24/79] Processing 04101800... Flooding detected: 5 days
+[25/79] Processing 04102500... No flooding
+[26/79] Processing 04103500... No flooding
+[27/79] Processing 04105000... No flooding
+[28/79] Processing 04105500... No flooding
+[29/79] Processing 04106000... No flooding
+[30/79] Processing 04108660... No flooding
+[31/79] Processing 04109000... No flooding
+[32/79] Processing 04111379... No flooding
+[33/79] Processing 04112500... Flooding detected: 3 days
+[34/79] Processing 04112850... Flooding detected: 3 days
+[35/79] Processing 04113000... No flooding
+[36/79] Processing 04114000... No flooding
+[37/79] Processing 04114498... No flooding
+[38/79] Processing 04115000... Flooding detected: 2 days
+[39/79] Processing 04116000... No flooding
+[40/79] Processing 04116500... No flooding
+[41/79] Processing 04117500... Flooding detected: 1 days
+[42/79] Processing 04118000... No flooding
+[43/79] Processing 04118105... No flooding
+[44/79] Processing 04118500... No flooding
+[45/79] Processing 04119000... No flooding
+[46/79] Processing 04119160... No flooding
+[47/79] Processing 04121500... No flooding
+[48/79] Processing 04121970... No flooding
+[49/79] Processing 04122001... No flooding
+[50/79] Processing 04122025... No flooding
+[51/79] Processing 04122200... No flooding
+[52/79] Processing 04122500... No flooding
+[53/79] Processing 04124000... Flooding detected: 5 days
+[54/79] Processing 04126970... No flooding
+[55/79] Processing 04127917... No flooding
+[56/79] Processing 04136000... No flooding
+[57/79] Processing 04142000... Flooding detected: 2 days
+[58/79] Processing 04144500... No flooding
+[59/79] Processing 04148140... Flooding detected: 1 days
+[60/79] Processing 04148440... No flooding
+[61/79] Processing 04148500... No flooding
+[62/79] Processing 04150500... No flooding
+[63/79] Processing 04151500... Flooding detected: 3 days
+[64/79] Processing 04152500... No flooding
+[65/79] Processing 04154000... No flooding
+[66/79] Processing 04155500... No flooding
+[67/79] Processing 04156000... No flooding
+[68/79] Processing 04159492... No flooding
+[69/79] Processing 04159900... No flooding
+[70/79] Processing 04164000... Flooding detected: 1 days
+[71/79] Processing 04164500... Flooding detected: 3 days
+[72/79] Processing 04165500... No flooding
+[73/79] Processing 04166500... Flooding detected: 2 days
+[74/79] Processing 04167000... No flooding
+[75/79] Processing 04168400... No flooding
+[76/79] Processing 04172000... No flooding
+[77/79] Processing 04173500... No flooding
+[78/79] Processing 04174500... No flooding
+[79/79] Processing 04176000... No flooding
+
+Found 13 stations with flooding
+
+Results written to /root/output/flood_results.csv
+Total stations with flooding: 13

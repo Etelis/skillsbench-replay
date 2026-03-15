@@ -1,0 +1,102 @@
+{
+    "id": "fd02302f-4335-4f95-a827-a30f56ef57a6",
+    "task_name": "weighted-gdp-calc",
+    "trial_name": "weighted-gdp-calc__Y8zCCPW",
+    "trial_uri": "file:///Users/itayetlis/Desktop/Work/Repos/skillsbench/skillsbench-trajectories/jobs/haiku-45-rerun-errors/weighted-gdp-calc__Y8zCCPW",
+    "task_id": {
+        "path": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/tasks/weighted-gdp-calc"
+    },
+    "source": "tasks",
+    "task_checksum": "72c5e7b036868aa7118a385b1141e9d86144e734a2d2e2c1e5418cafdde40e3d",
+    "config": {
+        "task": {
+            "path": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/tasks/weighted-gdp-calc",
+            "git_url": null,
+            "git_commit_id": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "tasks"
+        },
+        "trial_name": "weighted-gdp-calc__Y8zCCPW",
+        "trials_dir": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/skillsbench-trajectories/jobs/haiku-45-rerun-errors",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "terminus-2-skills",
+            "import_path": "libs.terminus_agent.agents.terminus_2.harbor_terminus_2_skills:HarborTerminus2WithSkills",
+            "model_name": "anthropic/claude-haiku-4-5-20251001",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "72c398b4-adaf-4e9d-80e5-36be2634d4e0"
+    },
+    "agent_info": {
+        "name": "terminus-2-skills",
+        "version": "2.0.0",
+        "model_info": {
+            "name": "claude-haiku-4-5-20251001",
+            "provider": "anthropic"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 431342,
+        "n_cache_tokens": null,
+        "n_output_tokens": 12439,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": {
+            "skills_loaded": [
+                "xlsx"
+            ],
+            "references_loaded": []
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-03-12T12:58:55.263400Z",
+    "finished_at": "2026-03-12T13:08:07.270463Z",
+    "environment_setup": {
+        "started_at": "2026-03-12T12:58:55.266293Z",
+        "finished_at": "2026-03-12T13:02:33.173248Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-03-12T13:02:33.173280Z",
+        "finished_at": "2026-03-12T13:02:40.037340Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-03-12T13:02:40.037445Z",
+        "finished_at": "2026-03-12T13:07:02.980692Z"
+    },
+    "verifier": {
+        "started_at": "2026-03-12T13:07:02.980934Z",
+        "finished_at": "2026-03-12T13:07:35.047537Z"
+    }
+}

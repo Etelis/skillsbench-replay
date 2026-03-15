@@ -1,0 +1,6 @@
+New Terminal Output:
+total 16
+drwxr-xr-x 3 root root 4096 Mar  9 09:40 .
+drwxr-xr-x 5 root root 4096 Mar 12 13:01 ..
+-rw-r--r-- 1 root root  557 Mar  9 09:40 SKILL.md
+drwxr-xr-x 2 root root 4096 Mar  9 09:40 scripts

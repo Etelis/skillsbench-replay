@@ -1,0 +1,18 @@
+New Terminal Output:
+Error analysis:
+t=1.0s: error=+4.057C, |error|=4.057C
+t=51.0s: error=+0.977C, |error|=0.977C
+t=101.0s: error=+0.417C, |error|=0.417C
+t=151.0s: error=+0.122C, |error|=0.122C
+t=201.0s: error=+0.255C, |error|=0.255C
+t=251.0s: error=+0.206C, |error|=0.206C
+
+Error stays below 0.5C for 30s starting at t=158.0s
+
+2% settling band: ±0.075C
+t=1.0s: T=18.27C, error=3.730C [OUT]
+t=51.0s: T=21.12C, error=0.877C [OUT]
+t=101.0s: T=21.33C, error=0.667C [OUT]
+t=151.0s: T=21.84C, error=0.164C [OUT]
+t=201.0s: T=22.01C, error=0.008C [IN]
+t=251.0s: T=22.14C, error=0.144C [OUT]

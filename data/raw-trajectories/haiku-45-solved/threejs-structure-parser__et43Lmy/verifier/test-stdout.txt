@@ -1,0 +1,62 @@
+Get:1 https://deb.nodesource.com/node_20.x nodistro InRelease [12.1 kB]
+Get:2 http://ports.ubuntu.com/ubuntu-ports noble InRelease [256 kB]
+Get:3 https://deb.nodesource.com/node_20.x nodistro/main arm64 Packages [13.9 kB]
+Get:4 http://ports.ubuntu.com/ubuntu-ports noble-updates InRelease [126 kB]
+Get:5 http://ports.ubuntu.com/ubuntu-ports noble-backports InRelease [126 kB]
+Get:6 http://ports.ubuntu.com/ubuntu-ports noble-security InRelease [126 kB]
+Get:7 http://ports.ubuntu.com/ubuntu-ports noble/main arm64 Packages [1776 kB]
+Get:8 http://ports.ubuntu.com/ubuntu-ports noble/universe arm64 Packages [19.0 MB]
+Get:9 http://ports.ubuntu.com/ubuntu-ports noble/multiverse arm64 Packages [274 kB]
+Get:10 http://ports.ubuntu.com/ubuntu-ports noble/restricted arm64 Packages [113 kB]
+Get:11 http://ports.ubuntu.com/ubuntu-ports noble-updates/multiverse arm64 Packages [41.7 kB]
+Get:12 http://ports.ubuntu.com/ubuntu-ports noble-updates/main arm64 Packages [2389 kB]
+Get:13 http://ports.ubuntu.com/ubuntu-ports noble-updates/restricted arm64 Packages [4825 kB]
+Get:14 http://ports.ubuntu.com/ubuntu-ports noble-updates/universe arm64 Packages [1977 kB]
+Get:15 http://ports.ubuntu.com/ubuntu-ports noble-backports/main arm64 Packages [49.4 kB]
+Get:16 http://ports.ubuntu.com/ubuntu-ports noble-backports/universe arm64 Packages [34.7 kB]
+Get:17 http://ports.ubuntu.com/ubuntu-ports noble-security/universe arm64 Packages [1262 kB]
+Get:18 http://ports.ubuntu.com/ubuntu-ports noble-security/main arm64 Packages [2026 kB]
+Get:19 http://ports.ubuntu.com/ubuntu-ports noble-security/multiverse arm64 Packages [42.1 kB]
+Get:20 http://ports.ubuntu.com/ubuntu-ports noble-security/restricted arm64 Packages [4649 kB]
+Fetched 39.1 MB in 3s (11.9 MB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (8.5.0-2ubuntu10.8).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+downloading uv 0.9.7 aarch64-unknown-linux-gnu
+no checksums to verify
+installing to /root/.local/bin
+  uv
+  uvx
+everything's installed!
+
+To add $HOME/.local/bin to your PATH, either restart your shell or run:
+
+    source $HOME/.local/bin/env (sh, bash, zsh)
+    source $HOME/.local/bin/env.fish (fish)
+Ground truth meshes saved.
+(node:475) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///root/data/object.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /root/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Downloading pygments (1.2MiB)
+Downloading numpy (14.9MiB)
+ Downloading pygments
+ Downloading numpy
+Installed 7 packages in 26ms
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.1, pluggy-1.6.0
+rootdir: /tests
+plugins: json-ctrf-0.3.5
+collected 3 items
+
+../tests/test_outputs.py ...                                             [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED ../tests/test_outputs.py::TestMeshExport::test_output_directories_exist
+PASSED ../tests/test_outputs.py::TestMeshExport::test_part_meshes_match_ground_truth
+PASSED ../tests/test_outputs.py::TestMeshExport::test_link_meshes_match_ground_truth
+============================== 3 passed in 1.02s ===============================

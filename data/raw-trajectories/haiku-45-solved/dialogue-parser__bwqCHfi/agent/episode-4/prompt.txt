@@ -1,0 +1,5 @@
+New Terminal Output:
+Warning: Orthogonal edges do not currently handle edge labels. Try using xlabels.
+Graph validation passed!
+Exported to /app/dialogue.json
+Exported to /app/dialogue.dot

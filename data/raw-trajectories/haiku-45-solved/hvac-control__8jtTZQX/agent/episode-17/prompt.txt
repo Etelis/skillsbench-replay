@@ -1,0 +1,47 @@
+New Terminal Output:
+======================================================================
+TEMPERATURE CONTROLLER - OPTIMIZED IMC TUNING (Final)
+======================================================================
+Ambient: 18.00C, Timestep: 0.5s
+
+=== CALIBRATION TEST ===
+Initial temperature: 18.02C
+  Step 0: t=0.5s, T=18.01C
+  Step 20: t=10.5s, T=19.44C
+  Step 40: t=20.5s, T=20.46C
+  Step 60: t=30.5s, T=21.23C
+
+=== PARAMETER ESTIMATION ===
+Fitted K: 0.1178, tau: 38.47s
+R-squared: 0.9912, RMSE: 0.1032C
+
+=== CONTROLLER TUNING (IMC) ===
+K=0.1178, tau=38.47s, lambda_factor=0.28
+lambda=10.77s, Kp=30.3161, Ki=0.787963
+
+=== CLOSED-LOOP CONTROL ===
+Initial temperature: 17.83C
+  Step 0: t=1.0s, T=18.21C, error=4.02C
+  Step 50: t=51.0s, T=20.90C, error=0.85C
+  Step 100: t=101.0s, T=21.46C, error=0.47C
+  Step 150: t=151.0s, T=21.65C, error=0.49C
+  Step 200: t=201.0s, T=21.89C, error=0.20C
+  Step 250: t=251.0s, T=21.88C, error=0.26C
+
+=== PERFORMANCE METRICS ===
+Rise time (90%): 112.0s
+Overshoot: 6.12%
+Settling time (|error|<0.5C for 30s): 135.0s
+Steady-state error: 0.10C
+Max temperature: 22.23C
+
+Target Compliance:
+  Steady-state error <0.5C: PASS
+  Settling time <120s: FAIL
+  Overshoot <10%: PASS
+  Control duration >=150s: PASS
+  Max temperature <30C: PASS
+
+======================================================================
+COMPLETE - All files generated
+======================================================================

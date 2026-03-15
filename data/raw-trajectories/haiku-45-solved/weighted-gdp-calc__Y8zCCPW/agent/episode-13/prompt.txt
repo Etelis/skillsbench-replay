@@ -1,0 +1,34 @@
+New Terminal Output:
+Verifying row 9 contains the years...
+H9: 2019
+I9: =H9+1
+J9: =I9+1
+K9: =J9+1
+L9: =K9+1
+
+Updating all formulas with correct references...
+
+Filling Exports data (H12:L17)...
+H12: =INDEX(Data!$B$21:$M$26,MATCH($D12,Data!$B$21:$B$26,0),MATCH(H$9,Data!$H$4:$M$4,0))
+I12: =INDEX(Data!$B$21:$M$26,MATCH($D12,Data!$B$21:$B$26,0),MATCH(I$9,Data!$H$4:$M$4,0))
+J12: =INDEX(Data!$B$21:$M$26,MATCH($D12,Data!$B$21:$B$26,0),MATCH(J$9,Data!$H$4:$M$4,0))
+K12: =INDEX(Data!$B$21:$M$26,MATCH($D12,Data!$B$21:$B$26,0),MATCH(K$9,Data!$H$4:$M$4,0))
+L12: =INDEX(Data!$B$21:$M$26,MATCH($D12,Data!$B$21:$B$26,0),MATCH(L$9,Data!$H$4:$M$4,0))
+
+Filling Imports data (H19:L24)...
+H19: =INDEX(Data!$B$28:$M$33,MATCH($D19,Data!$B$28:$B$33,0),MATCH(H$9,Data!$H$4:$M$4,0))
+I19: =INDEX(Data!$B$28:$M$33,MATCH($D19,Data!$B$28:$B$33,0),MATCH(I$9,Data!$H$4:$M$4,0))
+J19: =INDEX(Data!$B$28:$M$33,MATCH($D19,Data!$B$28:$B$33,0),MATCH(J$9,Data!$H$4:$M$4,0))
+K19: =INDEX(Data!$B$28:$M$33,MATCH($D19,Data!$B$28:$B$33,0),MATCH(K$9,Data!$H$4:$M$4,0))
+L19: =INDEX(Data!$B$28:$M$33,MATCH($D19,Data!$B$28:$B$33,0),MATCH(L$9,Data!$H$4:$M$4,0))
+
+Filling GDP data (H26:L31)...
+H26: =INDEX(Data!$B$35:$M$40,MATCH($D26,Data!$B$35:$B$40,0),MATCH(H$9,Data!$H$4:$M$4,0))
+I26: =INDEX(Data!$B$35:$M$40,MATCH($D26,Data!$B$35:$B$40,0),MATCH(I$9,Data!$H$4:$M$4,0))
+J26: =INDEX(Data!$B$35:$M$40,MATCH($D26,Data!$B$35:$B$40,0),MATCH(J$9,Data!$H$4:$M$4,0))
+K26: =INDEX(Data!$B$35:$M$40,MATCH($D26,Data!$B$35:$B$40,0),MATCH(K$9,Data!$H$4:$M$4,0))
+L26: =INDEX(Data!$B$35:$M$40,MATCH($D26,Data!$B$35:$B$40,0),MATCH(L$9,Data!$H$4:$M$4,0))
+
+Fixing percentile formulas...
+
+All formulas updated!

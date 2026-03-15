@@ -1,0 +1,158 @@
+New Terminal Output:
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.0.1
+[notice] To update, run: pip install --upgrade pip
+
+Loading Whisper model (tiny)...
+
+  0%|                                              | 0.00/72.1M [00:00<?, ?iB/s]
+  0%|                                      | 144k/72.1M [00:00<00:53, 1.40MiB/s]
+  1%|▎                                     | 672k/72.1M [00:00<00:20, 3.70MiB/s]
+  4%|█▍                                   | 2.91M/72.1M [00:00<00:05, 12.6MiB/s]
+ 13%|████▋                                | 9.20M/72.1M [00:00<00:01, 33.5MiB/s]
+ 23%|████████▍                            | 16.4M/72.1M [00:00<00:01, 48.4MiB/s]
+ 30%|███████████▏                         | 21.8M/72.1M [00:00<00:01, 45.7MiB/s]
+ 41%|███████████████▎                     | 29.8M/72.1M [00:00<00:00, 57.2MiB/s]
+ 50%|██████████████████▍                  | 36.0M/72.1M [00:00<00:00, 59.5MiB/s]
+ 61%|██████████████████████▍              | 43.8M/72.1M [00:00<00:00, 66.1MiB/s]
+ 70%|█████████████████████████▉           | 50.5M/72.1M [00:01<00:00, 67.0MiB/s]
+ 79%|█████████████████████████████▏       | 57.0M/72.1M [00:01<00:00, 65.3MiB/s]
+ 88%|████████████████████████████████▋    | 63.8M/72.1M [00:01<00:00, 66.6MiB/s]
+ 99%|████████████████████████████████████▋| 71.5M/72.1M [00:01<00:00, 70.6MiB/s]
+100%|█████████████████████████████████████| 72.1M/72.1M [00:01<00:00, 55.0MiB/s]
+Transcribing video...
+/usr/local/lib/python3.12/site-packages/whisper/transcribe.py:132: UserWarning: FP16 is not supported on CPU; using FP32 instead
+  warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+Extracting filler words...
+Found 128 filler words/phrases
+  so at 1.08s
+  you know at 13.98s
+  like at 14.8s
+  like at 27.44s
+  like at 29.76s
+  like at 32.52s
+  like at 33.74s
+  you know at 35.22s
+  like at 35.62s
+  like at 36.5s
+  so at 39.28s
+  yeah at 40.8s
+  like at 41.22s
+  like at 42.62s
+  like at 43.62s
+  like at 45.18s
+  so at 45.38s
+  okay at 46.1s
+  like at 47.78s
+  like at 48.18s
+  like at 49.04s
+  like at 52.8s
+  like at 53.78s
+  like at 56.1s
+  like at 58.14s
+  like at 65.5s
+  like at 67.44s
+  like at 68.84s
+  you know at 70.16s
+  well at 73.06s
+  like at 75.82s
+  kind of at 76.82s
+  like at 78.64s
+  you know at 79.66s
+  yeah at 79.98s
+  like at 80.46s
+  you know at 82.72s
+  you know at 86.18s
+  so at 87.02s
+  kind of at 88.72s
+  like at 89.62s
+  you know at 90.96s
+  so at 91.94s
+  yeah at 95.06s
+  like at 98.16s
+  yeah at 98.68s
+  like at 101.46s
+  kind of at 108.68s
+  like at 109.0s
+  um at 109.79s
+  um at 112.31s
+  yeah at 112.85s
+  i mean at 113.23s
+  you know at 119.99s
+  i mean at 120.27s
+  like at 120.45s
+  you know at 124.87s
+  i mean at 125.15s
+  like at 125.57s
+  like at 126.25s
+  like at 131.57s
+  so at 134.67s
+  so at 137.41s
+  okay at 143.25s
+  like at 145.91s
+  like at 148.09s
+  you know at 152.99s
+  i mean at 153.27s
+  like at 153.69s
+  like at 157.35s
+  you know at 158.85s
+  um at 164.31s
+  like at 166.37s
+  basically at 168.35s
+  um at 169.61s
+  like at 170.33s
+  like at 171.63s
+  like at 172.85s
+  like at 173.61s
+  like at 175.23s
+  like at 178.27s
+  um at 186.85s
+  i mean at 188.05s
+  like at 188.93s
+  you know at 190.13s
+  i mean at 190.33s
+  like at 190.73s
+  like at 192.25s
+  like at 194.29s
+  like at 194.97s
+  um at 197.11s
+  i mean at 199.05s
+  so at 200.91s
+  like at 201.33s
+  like at 203.85s
+  so at 206.69s
+  um at 207.13s
+  so at 208.29s
+  like at 210.65s
+  like at 211.97s
+  so at 212.77s
+  like at 214.27s
+  like at 216.45s
+  um at 219.33s
+  so at 219.33s
+  like at 220.13s
+  like at 223.45s
+  like at 229.15s
+  you know at 229.89s
+  i mean at 230.03s
+  um at 231.03s
+  yeah at 232.51s
+  um at 232.91s
+  so at 234.41s
+  basically at 236.91s
+  i mean at 241.75s
+  so at 244.03s
+  yeah at 246.19s
+  i mean at 246.47s
+  like at 249.21s
+  like at 252.41s
+  like at 253.59s
+  so at 255.53s
+  um at 255.93s
+  yeah at 260.19s
+  yeah at 262.07s
+  okay at 263.81s
+  yeah at 268.55s
+
+Annotations saved to /root/annotations.json

@@ -1,0 +1,12 @@
+New Terminal Output:
+Nodes:
+  GateScene: type=line, speaker=Guard
+  NameChoice: type=choice, speaker=
+  End: type=line, speaker=
+
+Edges:
+  GateScene -> NameChoice: 
+  NameChoice -> KnightPath: 1. I am Sir Aldric, Knight of the Realm.
+  NameChoice -> TravelerPath: 2. Just a humble traveler seeking shelter.
+  NameChoice -> MerchantPath: 3. [Lie] I'm a merchant with important goods.
+  NameChoice -> CombatStart: 4. [Attack] Draw your sword!

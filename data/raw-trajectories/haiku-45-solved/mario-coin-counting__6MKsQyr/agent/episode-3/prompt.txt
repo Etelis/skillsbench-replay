@@ -1,0 +1,9 @@
+New Terminal Output:
+-rw-r--r-- 1 root root 236K Mar 12 13:05 /root/keyframes_001.png
+-rw-r--r-- 1 root root 328K Mar 12 13:05 /root/keyframes_002.png
+-rw-r--r-- 1 root root 175K Mar 12 13:05 /root/keyframes_003.png
+-rw-r--r-- 1 root root 192K Mar 12 13:05 /root/keyframes_004.png
+-rw-r--r-- 1 root root 190K Mar 12 13:05 /root/keyframes_005.png
+-rw-r--r-- 1 root root 167K Mar 12 13:05 /root/keyframes_006.png
+-rw-r--r-- 1 root root 204K Mar 12 13:05 /root/keyframes_007.png
+-rw-r--r-- 1 root root 287K Mar 12 13:05 /root/keyframes_008.png

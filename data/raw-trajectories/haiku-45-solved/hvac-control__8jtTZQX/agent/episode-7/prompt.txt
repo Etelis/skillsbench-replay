@@ -1,0 +1,41 @@
+New Terminal Output:
+t=1.0s: T=18.10C, error=3.90C
+t=21.0s: T=20.18C, error=1.82C
+t=41.0s: T=21.15C, error=0.85C
+t=61.0s: T=21.38C, error=0.62C
+t=81.0s: T=21.52C, error=0.48C
+t=101.0s: T=21.76C, error=0.24C
+t=121.0s: T=21.62C, error=0.38C
+t=141.0s: T=21.45C, error=0.55C
+t=161.0s: T=21.77C, error=0.23C
+t=181.0s: T=21.69C, error=0.31C
+t=201.0s: T=21.95C, error=0.05C
+t=221.0s: T=21.95C, error=0.05C
+t=241.0s: T=21.92C, error=0.08C
+t=261.0s: T=21.88C, error=0.12C
+t=281.0s: T=21.99C, error=0.01C
+
+2% settling band: ±0.08C (within 21.92C to 22.08C)
+Enters 2% band at t=133.0s, T=22.01C
+
+Last 20 data points:
+  t=281.0s: T=21.99C, error=0.013C [IN]
+  t=282.0s: T=22.02C, error=0.024C [IN]
+  t=283.0s: T=22.07C, error=0.070C [IN]
+  t=284.0s: T=21.89C, error=0.105C [OUT]
+  t=285.0s: T=21.87C, error=0.126C [OUT]
+  t=286.0s: T=21.89C, error=0.106C [OUT]
+  t=287.0s: T=21.98C, error=0.017C [IN]
+  t=288.0s: T=21.95C, error=0.047C [IN]
+  t=289.0s: T=21.95C, error=0.050C [IN]
+  t=290.0s: T=21.94C, error=0.063C [IN]
+  t=291.0s: T=21.75C, error=0.250C [OUT]
+  t=292.0s: T=22.04C, error=0.035C [IN]
+  t=293.0s: T=22.10C, error=0.103C [OUT]
+  t=294.0s: T=22.20C, error=0.199C [OUT]
+  t=295.0s: T=21.93C, error=0.072C [IN]
+  t=296.0s: T=21.83C, error=0.170C [OUT]
+  t=297.0s: T=22.04C, error=0.043C [IN]
+  t=298.0s: T=21.78C, error=0.218C [OUT]
+  t=299.0s: T=21.79C, error=0.212C [OUT]
+  t=300.0s: T=22.01C, error=0.009C [IN]

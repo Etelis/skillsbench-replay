@@ -1,0 +1,5 @@
+New Terminal Output:
+-rw-r--r-- 1 root root 2.1K Mar  9 09:40 /root/coin.png
+-rw-r--r-- 1 root root 4.0K Mar  9 09:40 /root/enemy.png
+-rw-r--r-- 1 root root  15M Mar  9 09:40 /root/super-mario.mp4
+-rw-r--r-- 1 root root 1.2K Mar  9 09:40 /root/turtle.png

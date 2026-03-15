@@ -1,0 +1,82 @@
+New Terminal Output:
+======================================================================
+TEMPERATURE CONTROLLER IMPLEMENTATION (v4 - Optimized Tuning)
+======================================================================
+
+Simulator initialized
+Ambient temp: 18.00C
+Timestep: 0.5s
+Safety limits: {'max_temp': 30.0, 'min_temp': 10.0}
+
+=== CALIBRATION TEST ===
+Heater power: 50.0%
+Duration: 40.0s
+Initial temperature: 17.91C
+  Step 0: t=0.5s, T=17.96C
+  Step 20: t=10.5s, T=19.37C
+  Step 40: t=20.5s, T=20.47C
+  Step 60: t=30.5s, T=21.14C
+Collected 80 data points
+Saved calibration_log.json
+
+=== PARAMETER ESTIMATION ===
+Time range: 0.5s to 40.0s
+Temperature range: 17.96C to 21.95C
+Input: 50.0%
+Initial K guess: 0.0733
+Initial tau guess: 20.00s
+Fitted K: 0.1157
+Fitted tau: 36.65s
+R-squared: 0.9925
+Fitting error (RMSE): 0.0952C
+Saved estimated_params.json
+
+=== CONTROLLER TUNING (IMC) ===
+System parameters: K=0.1157, tau=36.65s
+Lambda factor: 0.35
+Closed-loop time constant (lambda): 12.83s
+Kp (proportional gain): 24.6996
+Ki (integral gain): 0.673875
+Kd (derivative gain): 0.0000
+Saved tuned_gains.json
+
+=== CLOSED-LOOP CONTROL ===
+Setpoint: 22.0C
+Duration: 150.0s
+Kp=24.6996, Ki=0.673875
+Initial temperature: 18.07C
+Safety limit (max temp): 30.0C
+  Step 0: t=1.0s, T=18.10C, error=3.92C, power=98.2%
+  Step 50: t=51.0s, T=21.05C, error=1.16C, power=63.7%
+  Step 100: t=101.0s, T=21.49C, error=0.49C, power=60.0%
+  Step 150: t=151.0s, T=21.36C, error=0.25C, power=61.4%
+  Step 200: t=201.0s, T=21.75C, error=0.33C, power=67.6%
+  Step 250: t=251.0s, T=21.98C, error=-0.06C, power=60.8%
+Collected 300 control data points
+Saved control_log.json
+
+=== PERFORMANCE METRICS ===
+Rise time (90%): 82.0s
+Overshoot: 7.33%
+Settling time (2%): 290.0s
+Steady-state error: 0.09C
+Max temperature: 22.29C
+
+Target Compliance:
+  Steady-state error <0.5C: PASS
+  Settling time <120s: FAIL
+  Overshoot <10%: PASS
+  Control duration >=150s: PASS
+  Max temperature <30C: PASS
+Saved metrics.json
+
+======================================================================
+CONTROLLER IMPLEMENTATION COMPLETE
+======================================================================
+
+Generated files:
+  - calibration_log.json
+  - estimated_params.json
+  - tuned_gains.json
+  - control_log.json
+  - metrics.json

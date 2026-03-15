@@ -1,0 +1,56 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 4,
+            "passed": 4,
+            "failed": 0,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1773316226.465929,
+            "stop": 1773316226.4759078
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::TestEconomicsTask::test_answer_file_exists",
+                "status": "passed",
+                "duration": 0.000756541000555444,
+                "start": 1773316226.471907,
+                "stop": 1773316226.4735093,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestEconomicsTask::test_answer_format",
+                "status": "passed",
+                "duration": 0.00045470900113286916,
+                "start": 1773316226.473728,
+                "stop": 1773316226.4744563,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestEconomicsTask::test_answer_is_valid_number",
+                "status": "passed",
+                "duration": 0.00028891700003441656,
+                "start": 1773316226.474634,
+                "stop": 1773316226.475125,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::TestEconomicsTask::test_correlation_value_correct",
+                "status": "passed",
+                "duration": 0.00032362400088459253,
+                "start": 1773316226.475306,
+                "stop": 1773316226.4758263,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

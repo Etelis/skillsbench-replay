@@ -1,0 +1,103 @@
+{
+    "id": "8ea08992-a70a-4507-b260-e8403ff13635",
+    "task_name": "gravitational-wave-detection",
+    "trial_name": "gravitational-wave-detection__t2BTNFa",
+    "trial_uri": "file:///Users/itayetlis/Desktop/Work/Repos/skillsbench/skillsbench-trajectories/jobs/haiku-45-easy-medium/gravitational-wave-detection__t2BTNFa",
+    "task_id": {
+        "path": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/tasks/gravitational-wave-detection"
+    },
+    "source": "tasks",
+    "task_checksum": "f90fd4c71f430bee7bea77b86134b72a2c17bc77c76e0aa696d7e33a804a50a6",
+    "config": {
+        "task": {
+            "path": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/tasks/gravitational-wave-detection",
+            "git_url": null,
+            "git_commit_id": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "tasks"
+        },
+        "trial_name": "gravitational-wave-detection__t2BTNFa",
+        "trials_dir": "/Users/itayetlis/Desktop/Work/Repos/skillsbench/skillsbench-trajectories/jobs/haiku-45-easy-medium",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "terminus-2-skills",
+            "import_path": "libs.terminus_agent.agents.terminus_2.harbor_terminus_2_skills:HarborTerminus2WithSkills",
+            "model_name": "anthropic/claude-haiku-4-5-20251001",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "f504817d-c10e-4614-bc6c-b34ebc447f33"
+    },
+    "agent_info": {
+        "name": "terminus-2-skills",
+        "version": "2.0.0",
+        "model_info": {
+            "name": "claude-haiku-4-5-20251001",
+            "provider": "anthropic"
+        }
+    },
+    "agent_result": {
+        "n_input_tokens": 18724,
+        "n_cache_tokens": null,
+        "n_output_tokens": 2544,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": {
+            "skills_loaded": [
+                "conditioning",
+                "matched-filtering"
+            ],
+            "references_loaded": []
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-03-12T11:44:17.155709Z",
+    "finished_at": "2026-03-12T11:55:46.014837Z",
+    "environment_setup": {
+        "started_at": "2026-03-12T11:44:17.169838Z",
+        "finished_at": "2026-03-12T11:48:18.060488Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-03-12T11:48:18.060518Z",
+        "finished_at": "2026-03-12T11:50:05.654835Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-03-12T11:50:05.654938Z",
+        "finished_at": "2026-03-12T11:54:21.685743Z"
+    },
+    "verifier": {
+        "started_at": "2026-03-12T11:54:21.685909Z",
+        "finished_at": "2026-03-12T11:55:27.920924Z"
+    }
+}

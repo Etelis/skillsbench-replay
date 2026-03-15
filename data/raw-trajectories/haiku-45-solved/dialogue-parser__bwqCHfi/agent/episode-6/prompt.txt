@@ -1,0 +1,105 @@
+New Terminal Output:
+"to": "WorkChoice",
+      "text": ""
+    },
+    {
+      "from": "WorkChoice",
+      "to": "WorkDetails",
+      "text": "1. What's the job?"
+    },
+    {
+      "from": "WorkChoice",
+      "to": "WorkRisk",
+      "text": "2. How dangerous?"
+    },
+    {
+      "from": "WorkChoice",
+      "to": "WorkPay",
+      "text": "3. How much?"
+    },
+    {
+      "from": "WorkDetails",
+      "to": "WorkAccept",
+      "text": ""
+    },
+    {
+      "from": "WorkRisk",
+      "to": "WorkDetails",
+      "text": ""
+    },
+    {
+      "from": "WorkPay",
+      "to": "WorkAccept",
+      "text": ""
+    },
+    {
+      "from": "WorkAccept",
+      "to": "SideQuestAccepted",
+      "text": "1. I'll do it."
+    },
+    {
+      "from": "WorkAccept",
+      "to": "WorkDetails",
+      "text": "2. I need more information."
+    },
+    {
+      "from": "WorkAccept",
+      "to": "StrangerGreet",
+      "text": "3. I have other priorities."
+    },
+    {
+      "from": "SideQuestAccepted",
+      "to": "TavernChoice",
+      "text": ""
+    },
+    {
+      "from": "BarFight",
+      "to": "BarFightChoice",
+      "text": ""
+    },
+    {
+      "from": "BarFightChoice",
+      "to": "BarFightWin",
+      "text": "1. [Fight] Join the brawl!"
+    },
+    {
+      "from": "BarFightChoice",
+      "to": "TavernExit",
+      "text": "2. [Flee] Slip out the back!"
+    },
+    {
+      "from": "BarFightChoice",
+      "to": "BarFightHide",
+      "text": "3. [Hide] Duck under a table!"
+    },
+    {
+      "from": "BarFightWin",
+      "to": "BarFightAfter",
+      "text": ""
+    },
+    {
+      "from": "BarFightHide",
+      "to": "BarFightAfter",
+      "text": ""
+    },
+    {
+      "from": "BarFightAfter",
+      "to": "TavernExit",
+      "text": ""
+    },
+    {
+      "from": "TavernExit",
+      "to": "End",
+      "text": ""
+    },
+    {
+      "from": "JourneyBegin",
+      "to": "End",
+      "text": ""
+    }
+  ]
+}
+
+205
+
+321

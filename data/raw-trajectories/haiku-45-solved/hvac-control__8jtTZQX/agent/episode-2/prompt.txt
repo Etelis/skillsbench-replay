@@ -1,0 +1,61 @@
+New Terminal Output:
+Help on class HVACSimulator in module hvac_simulator:
+
+class HVACSimulator(builtins.object)
+ |  HVACSimulator(config_path: str = '/root/room_config.json')
+ |
+ |  First-order thermal system simulator for HVAC control.
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self, config_path: str = '/root/room_config.json')
+ |      Initialize the simulator with parameters from config file.
+ |
+ |      Args:
+ |          config_path: Path to the JSON configuration file (for operating params only)
+ |
+ |  get_ambient_temp(self) -> float
+ |      Get the ambient temperature.
+ |
+ |  get_dt(self) -> float
+ |      Get the simulation timestep.
+ |
+ |  get_safety_limits(self) -> dict
+ |      Get the safety temperature limits.
+ |
+ |  get_setpoint(self) -> float
+ |      Get the target temperature setpoint.
+ |
+ |  reset(self) -> float
+ |      Reset the simulator and return initial temperature reading.
+ |
+ |      Returns:
+ |          Initial temperature with measurement noise
+ |
+ |  run_open_loop(self, heater_power: float, duration: float) -> list
+ |      Run open-loop simulation with constant heater power.
+ |
+ |      Args:
+ |          heater_power: Constant heater power (0-100%)
+ |          duration: Duration in seconds
+ |
+ |      Returns:
+ |          List of timestep results
+ |
+ |  step(self, heater_power: float) -> dict
+ |      Advance simulation by one timestep.
+ |
+ |      Args:
+ |          heater_power: Heater power command (0-100%)
+ |
+ |      Returns:
+ |          Dictionary with time, temperature, heater_power, safety_triggered
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  __dict__
+ |      dictionary for instance variables
+ |
+ |  __weakref__
+ |      list of weak references to the object
