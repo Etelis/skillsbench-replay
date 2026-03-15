@@ -15,8 +15,12 @@ def _get_anthropic_client() -> anthropic.AsyncAnthropic:
     return _anthropic_client
 
 
-def _get_openai_client(base_url: str | None = None, api_key: str | None = None) -> AsyncOpenAI:
-    key = f"{base_url}:{api_key}"
+def _get_openai_client(
+    base_url: str | None = None,
+    api_key: str | None = None,
+    extra_headers: dict[str, str] | None = None,
+) -> AsyncOpenAI:
+    key = f"{base_url}:{api_key}:{sorted(extra_headers.items()) if extra_headers else ''}"
     if key not in _openai_clients:
         kwargs = {}
         if base_url:
@@ -26,6 +30,8 @@ def _get_openai_client(base_url: str | None = None, api_key: str | None = None) 
         elif base_url:
             # vLLM doesn't need a real key, but the SDK requires one
             kwargs["api_key"] = "EMPTY"
+        if extra_headers:
+            kwargs["default_headers"] = extra_headers
         _openai_clients[key] = AsyncOpenAI(**kwargs)
     return _openai_clients[key]
 
@@ -62,7 +68,7 @@ async def _generate_anthropic(config: ModelConfig, messages: list[dict]) -> tupl
 
 
 async def _generate_openai(config: ModelConfig, messages: list[dict]) -> tuple[str, dict]:
-    client = _get_openai_client(config.base_url, config.api_key)
+    client = _get_openai_client(config.base_url, config.api_key, config.extra_headers)
     response = await client.chat.completions.create(
         model=config.model_name,
         messages=messages,
@@ -100,7 +106,7 @@ async def judge_call(config: JudgeConfig, prompt: str) -> tuple[str, dict]:
             "output_tokens": response.usage.output_tokens,
         }
     elif config.provider == "openai":
-        client = _get_openai_client(config.base_url, config.api_key)
+        client = _get_openai_client(config.base_url, config.api_key, config.extra_headers)
         response = await client.chat.completions.create(
             model=config.model_name,
             messages=messages,

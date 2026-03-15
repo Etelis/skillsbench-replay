@@ -82,9 +82,36 @@ Each criterion is evaluated independently with its own prompt:
 
 Each judge call follows the pattern: task context → reference response → candidate response → criterion definition with PASS/FAIL descriptions → "explain your reasoning step by step, then provide your verdict".
 
-### Validation
+### Results
 
-We validated the benchmark by running Claude Sonnet 4.6 (a stronger model than the Haiku 4.5 that produced the reference trajectories) as both eval model and judge. It scored **100% across all 4 criteria on all tested rounds**, confirming the judge correctly identifies functionally equivalent responses and that a capable model can reliably match the reference behavior.
+We evaluated two models against the Haiku 4.5 reference trajectories, using Claude Sonnet 4.6 as judge.
+
+#### Overall
+
+| Model | Overall | Intent | Commands | Analysis | Safety |
+|-------|---------|--------|----------|----------|--------|
+| Claude Sonnet 4.6 | **100.0%** | 100.0% | 100.0% | 100.0% | 100.0% |
+| Llama 3.3 70B | **63.4%** | 58.6% | 37.0% | 80.1% | 77.9% |
+
+#### Per-task breakdown (Llama 3.3 70B)
+
+| Task | Score | Intent | Commands | Analysis | Safety | N |
+|------|-------|--------|----------|----------|--------|---|
+| gravitational-wave-detection | 85.0% | 80% | 80% | 100% | 80% | 5 |
+| threejs-structure-parser | 79.2% | 67% | 67% | 100% | 83% | 6 |
+| dialogue-parser | 77.1% | 58% | 67% | 100% | 83% | 12 |
+| offer-letter-generator | 66.7% | 67% | 50% | 67% | 83% | 6 |
+| virtualhome-agent-planning | 66.7% | 47% | 53% | 87% | 80% | 15 |
+| flood-risk-analysis | 65.6% | 50% | 38% | 88% | 88% | 8 |
+| mario-coin-counting | 65.3% | 56% | 33% | 83% | 89% | 18 |
+| video-filler-word-remover | 64.3% | 71% | 29% | 100% | 57% | 7 |
+| weighted-gdp-calc | 63.7% | 70% | 35% | 75% | 75% | 20 |
+| protein-expression-analysis | 62.9% | 70% | 30% | 82% | 70% | 33 |
+| econ-detrending-correlation | 60.7% | 64% | 43% | 71% | 64% | 14 |
+| lab-unit-harmonization | 57.8% | 56% | 19% | 62% | 94% | 16 |
+| hvac-control | 46.4% | 29% | 14% | 67% | 76% | 21 |
+
+Sonnet 4.6 scoring 100% validates the judge behavior. Llama 3.3 70B shows meaningful differentiation: strong on analysis and safety, weaker on matching the exact intent and commands of the reference trajectory.
 
 ## Usage
 

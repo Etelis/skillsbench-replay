@@ -12,6 +12,7 @@ class ModelConfig:
     max_tokens: int = 8192
     base_url: str | None = "http://localhost:8000/v1"  # vLLM endpoint
     api_key: str | None = None  # Override API key (defaults to env var)
+    extra_headers: dict[str, str] | None = None  # Custom headers (e.g. RITS_API_KEY)
 
 
 @dataclass
@@ -22,6 +23,7 @@ class JudgeConfig:
     max_tokens: int = 2048
     base_url: str | None = "http://localhost:8000/v1"
     api_key: str | None = None
+    extra_headers: dict[str, str] | None = None
 
 
 @dataclass
