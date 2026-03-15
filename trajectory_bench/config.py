@@ -16,11 +16,11 @@ class ModelConfig:
 
 @dataclass
 class JudgeConfig:
-    provider: str = "anthropic"  # "anthropic" or "openai" (includes vLLM)
-    model_name: str = "claude-sonnet-4-5-20250929"
+    provider: str = "openai"  # "openai" (vLLM, TGI, etc.) or "anthropic"
+    model_name: str = "meta-llama/Llama-3.1-8B-Instruct"
     temperature: float = 0.0
     max_tokens: int = 2048
-    base_url: str | None = None
+    base_url: str | None = "http://localhost:8000/v1"
     api_key: str | None = None
 
 

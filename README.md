@@ -24,14 +24,31 @@ vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8000
 python3 -m venv .venv && source .venv/bin/activate
 pip install openai pyyaml tenacity
 
-# Dry run — no API calls, shows sample count + estimated tokens
-python run.py --config configs/eval-vllm.yaml --dry-run
+# Dry run — shows sample count + estimated tokens
+python run.py --endpoint http://localhost:8000/v1 --model meta-llama/Llama-3.1-8B-Instruct --dry-run
 
 # Test with a few samples
-python run.py --config configs/eval-vllm.yaml --max-samples 5
+python run.py --endpoint http://localhost:8000/v1 --model meta-llama/Llama-3.1-8B-Instruct --max-samples 5
 
 # Full run (181 samples)
-python run.py --config configs/eval-vllm.yaml
+python run.py --endpoint http://localhost:8000/v1 --model meta-llama/Llama-3.1-8B-Instruct
+```
+
+### With kvcache-bench
+
+This benchmark integrates with [kvcache-bench](https://github.ibm.com/AICoOptimization/kvcache-bench). When registered there, run via:
+
+```bash
+python3 -m src llama8b --benchmarks skillsbench-replay
+```
+
+Or locally with port-forward:
+
+```bash
+oc port-forward -n llm-d-pic svc/llm-d-inference 8000:8000 &
+python benchmarks/skillsbench-replay/run.py \
+  --endpoint http://localhost:8000/v1 \
+  --model meta-llama/Llama-3.1-8B-Instruct
 ```
 
 ## How it works
@@ -40,7 +57,7 @@ python run.py --config configs/eval-vllm.yaml
 For each of the 181 samples:
   1. Send the prompt (conversation history) to the eval model (vLLM)
   2. Get the candidate completion
-  3. Send reference + candidate to the judge model
+  3. Send reference + candidate to the judge model (same or different vLLM)
   4. Judge scores: equivalent (1.0) | partially_equivalent (0.5) | not_equivalent (0.0)
 ```
 
@@ -50,9 +67,32 @@ The judge evaluates on four criteria:
 - **Analysis**: Comparable understanding of task state?
 - **Errors**: Any mistakes that would derail the task?
 
-## Configuration
+## Usage
 
-### Single vLLM instance (model and judge on same server)
+### CLI args (kvcache-bench compatible)
+
+```bash
+python run.py \
+  --endpoint http://localhost:8000/v1 \
+  --model meta-llama/Llama-3.1-8B-Instruct \
+  --max-samples 20
+```
+
+Use a separate judge model/endpoint:
+
+```bash
+python run.py \
+  --endpoint http://localhost:8000/v1 \
+  --model meta-llama/Llama-3.1-8B-Instruct \
+  --judge-endpoint http://localhost:8001/v1 \
+  --judge-model meta-llama/Llama-3.1-70B-Instruct
+```
+
+### YAML config (alternative)
+
+```bash
+python run.py --config configs/eval-vllm.yaml
+```
 
 ```yaml
 # configs/eval-vllm.yaml
@@ -60,7 +100,7 @@ run_name: eval-vllm-llama-8b
 
 model:
   provider: openai
-  model_name: meta-llama/Llama-3.1-8B-Instruct  # must match vLLM --model
+  model_name: meta-llama/Llama-3.1-8B-Instruct
   base_url: http://localhost:8000/v1
   temperature: 0.7
   max_tokens: 8192
@@ -77,22 +117,6 @@ max_concurrent: 10
 output_dir: results
 ```
 
-### Separate model and judge (two vLLM instances)
-
-```yaml
-model:
-  provider: openai
-  model_name: meta-llama/Llama-3.1-8B-Instruct
-  base_url: http://localhost:8000/v1
-
-judge:
-  provider: openai
-  model_name: meta-llama/Llama-3.1-70B-Instruct
-  base_url: http://localhost:8001/v1   # second vLLM instance
-```
-
-The `openai` provider works with any OpenAI-compatible API: vLLM, TGI, Ollama, Together, etc. Set `base_url` to your endpoint.
-
 ### Filtering options
 
 ```yaml
@@ -106,7 +130,7 @@ max_samples: 20                                            # cap total samples
 Results are written to `results/{run_name}/`:
 
 ```
-results/eval-vllm-llama-8b/
+results/eval-llama-3.1-8b-instruct/
 ├── config.yaml                          # Config snapshot
 ├── summary.json                         # Aggregate scores (overall, by-task, by-turn)
 └── samples/
@@ -143,4 +167,3 @@ All tasks were successfully solved by Haiku 4.5 on SkillsBench.
 | offer-letter-generator | 6 | 1.000 |
 | threejs-structure-parser | 6 | 1.000 |
 | gravitational-wave-detection | 5 | 1.000 |
-

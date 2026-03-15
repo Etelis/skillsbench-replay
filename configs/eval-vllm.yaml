@@ -1,14 +1,12 @@
 run_name: eval-vllm-llama-8b
 
-# Model served via vLLM (OpenAI-compatible API)
 model:
   provider: openai
-  model_name: meta-llama/Llama-3.1-8B-Instruct  # must match vLLM --model
+  model_name: meta-llama/Llama-3.1-8B-Instruct
   base_url: http://localhost:8000/v1
   temperature: 0.7
   max_tokens: 8192
 
-# Judge — can use the same or a different vLLM instance
 judge:
   provider: openai
   model_name: meta-llama/Llama-3.1-8B-Instruct
