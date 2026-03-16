@@ -1,12 +1,10 @@
-run_name: eval-granite-4.0-8b
+run_name: eval-sonnet-46
 
 model:
   provider: openai
-  model_name: ibm-granite/granite-4.0-8b
-  base_url: https://inference-3scale-apicast-production.apps.rits.fmaas.res.ibm.com/granite-4-8b/v1
-  api_key: ${RITS_API_KEY}
-  extra_headers:
-    RITS_API_KEY: ${RITS_API_KEY}
+  model_name: claude-sonnet-4-6
+  base_url: https://ete-litellm.ai-models.vpc-int.res.ibm.com
+  api_key: ${LITELLM_API_KEY}
   temperature: 0.7
   max_tokens: 8192
 
@@ -19,6 +17,10 @@ judge:
   max_tokens: 2048
 
 data_path: data/rounds/all-solved.jsonl
-max_concurrent: 15
+filter_tasks: null
+filter_turns: null
+max_rounds: null
+
+max_concurrent: 5
 output_dir: results
 max_retries: 2
