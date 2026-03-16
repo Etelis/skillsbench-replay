@@ -84,7 +84,7 @@ Each judge call follows the pattern: task context → reference response → can
 
 ### Results
 
-We evaluated three models against the Haiku 4.5 reference trajectories, using Claude Sonnet 4.6 as judge.
+We evaluated six models against the Haiku 4.5 reference trajectories, using Claude Sonnet 4.6 as judge.
 
 #### Overall
 
@@ -92,7 +92,10 @@ We evaluated three models against the Haiku 4.5 reference trajectories, using Cl
 |-------|---------|--------|----------|----------|--------|
 | Claude Sonnet 4.6 | **100.0%** | 100.0% | 100.0% | 100.0% | 100.0% |
 | GPT-OSS 120B | **68.6%** | 63.6% | 46.6% | 84.7% | 79.5% |
+| Maverick 17B | **63.7%** | 61.3% | 36.5% | 85.1% | 71.8% |
 | Llama 3.3 70B | **63.4%** | 58.6% | 37.0% | 80.1% | 77.9% |
+| Granite 4.0 8B | **48.6%** | 42.5% | 24.3% | 54.1% | 73.5% |
+| Llama 3.1 8B | **46.8%** | 43.7% | 23.2% | 64.8% | 55.6% |
 
 #### Per-task breakdown (Claude Sonnet 4.6)
 
@@ -147,6 +150,60 @@ We evaluated three models against the Haiku 4.5 reference trajectories, using Cl
 | econ-detrending-correlation | 60.7% | 64% | 43% | 71% | 64% | 14 |
 | lab-unit-harmonization | 57.8% | 56% | 19% | 62% | 94% | 16 |
 | hvac-control | 46.4% | 29% | 14% | 67% | 76% | 21 |
+
+#### Per-task breakdown (Maverick 17B)
+
+| Task | Score | Intent | Commands | Analysis | Safety | N |
+|------|-------|--------|----------|----------|--------|---|
+| flood-risk-analysis | 81.2% | 75% | 62% | 100% | 88% | 8 |
+| offer-letter-generator | 79.2% | 83% | 67% | 100% | 67% | 6 |
+| gravitational-wave-detection | 70.0% | 60% | 40% | 100% | 80% | 5 |
+| virtualhome-agent-planning | 70.0% | 60% | 53% | 93% | 73% | 15 |
+| dialogue-parser | 68.8% | 58% | 42% | 100% | 75% | 12 |
+| mario-coin-counting | 68.1% | 61% | 39% | 83% | 89% | 18 |
+| protein-expression-analysis | 65.9% | 70% | 30% | 94% | 70% | 33 |
+| threejs-structure-parser | 62.5% | 50% | 50% | 83% | 67% | 6 |
+| weighted-gdp-calc | 61.3% | 70% | 35% | 70% | 70% | 20 |
+| video-filler-word-remover | 60.7% | 71% | 29% | 86% | 57% | 7 |
+| hvac-control | 58.3% | 48% | 19% | 86% | 81% | 21 |
+| econ-detrending-correlation | 57.1% | 57% | 43% | 79% | 50% | 14 |
+| lab-unit-harmonization | 45.3% | 44% | 19% | 56% | 62% | 16 |
+
+#### Per-task breakdown (Granite 4.0 8B)
+
+| Task | Score | Intent | Commands | Analysis | Safety | N |
+|------|-------|--------|----------|----------|--------|---|
+| dialogue-parser | 68.8% | 50% | 58% | 83% | 83% | 12 |
+| threejs-structure-parser | 66.7% | 67% | 33% | 83% | 83% | 6 |
+| offer-letter-generator | 62.5% | 83% | 33% | 67% | 67% | 6 |
+| video-filler-word-remover | 53.6% | 43% | 43% | 57% | 71% | 7 |
+| weighted-gdp-calc | 52.5% | 60% | 20% | 65% | 65% | 20 |
+| protein-expression-analysis | 51.5% | 52% | 24% | 61% | 70% | 33 |
+| hvac-control | 50.0% | 38% | 19% | 52% | 90% | 21 |
+| gravitational-wave-detection | 45.0% | 20% | 40% | 60% | 60% | 5 |
+| lab-unit-harmonization | 43.8% | 38% | 12% | 44% | 81% | 16 |
+| econ-detrending-correlation | 42.9% | 36% | 29% | 50% | 57% | 14 |
+| flood-risk-analysis | 37.5% | 38% | 25% | 38% | 50% | 8 |
+| mario-coin-counting | 37.5% | 28% | 11% | 39% | 72% | 18 |
+| virtualhome-agent-planning | 35.0% | 13% | 13% | 27% | 87% | 15 |
+
+#### Per-task breakdown (Llama 3.1 8B)
+
+| Task | Score | Intent | Commands | Analysis | Safety | N |
+|------|-------|--------|----------|----------|--------|---|
+| dialogue-parser | 60.4% | 58% | 25% | 83% | 75% | 12 |
+| mario-coin-counting | 56.9% | 50% | 33% | 89% | 56% | 18 |
+| threejs-structure-parser | 54.2% | 17% | 33% | 83% | 83% | 6 |
+| protein-expression-analysis | 50.0% | 64% | 18% | 64% | 55% | 22 |
+| virtualhome-agent-planning | 48.3% | 47% | 40% | 53% | 53% | 15 |
+| econ-detrending-correlation | 46.4% | 43% | 29% | 64% | 50% | 14 |
+| weighted-gdp-calc | 45.0% | 40% | 20% | 60% | 60% | 10 |
+| flood-risk-analysis | 43.8% | 38% | 38% | 62% | 38% | 8 |
+| video-filler-word-remover | 42.9% | 43% | 0% | 100% | 29% | 7 |
+| offer-letter-generator | 41.7% | 33% | 33% | 50% | 50% | 6 |
+| lab-unit-harmonization | 33.3% | 44% | 0% | 22% | 67% | 9 |
+| gravitational-wave-detection | 30.0% | 20% | 20% | 40% | 40% | 5 |
+| hvac-control | 30.0% | 10% | 0% | 50% | 60% | 10 |
 
 ## Usage
 
