@@ -1,6 +1,6 @@
 # skillsbench-replay
 
-Evaluate small and self-hosted models on [SkillsBench](https://github.com/harbor-ai/skillsbench) tasks — without running any tools or environments. Designed for models served via **vLLM**.
+Evaluate small and self-hosted models on [SkillsBench](https://github.com/harbor-ai/skillsbench) tasks — without running any tools or environments.
 
 ## Motivation
 
@@ -147,8 +147,6 @@ We evaluated three models against the Haiku 4.5 reference trajectories, using Cl
 | econ-detrending-correlation | 60.7% | 64% | 43% | 71% | 64% | 14 |
 | lab-unit-harmonization | 57.8% | 56% | 19% | 62% | 94% | 16 |
 | hvac-control | 46.4% | 29% | 14% | 67% | 76% | 21 |
-
-Sonnet 4.6 scoring 100% across all tasks validates the judge behavior. GPT-OSS 120B (68.6%) edges out Llama 3.3 70B (63.4%) with the biggest gain in commands (46.6% vs 37.0%). All models show the same pattern: analysis and safety are easier criteria, commands are hardest.
 
 ## Usage
 
