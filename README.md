@@ -84,14 +84,51 @@ Each judge call follows the pattern: task context → reference response → can
 
 ### Results
 
-We evaluated two models against the Haiku 4.5 reference trajectories, using Claude Sonnet 4.6 as judge.
+We evaluated three models against the Haiku 4.5 reference trajectories, using Claude Sonnet 4.6 as judge.
 
 #### Overall
 
 | Model | Overall | Intent | Commands | Analysis | Safety |
 |-------|---------|--------|----------|----------|--------|
 | Claude Sonnet 4.6 | **100.0%** | 100.0% | 100.0% | 100.0% | 100.0% |
+| GPT-OSS 120B | **68.6%** | 63.6% | 46.6% | 84.7% | 79.5% |
 | Llama 3.3 70B | **63.4%** | 58.6% | 37.0% | 80.1% | 77.9% |
+
+#### Per-task breakdown (Claude Sonnet 4.6)
+
+| Task | Score | Intent | Commands | Analysis | Safety | N |
+|------|-------|--------|----------|----------|--------|---|
+| dialogue-parser | 100.0% | 100% | 100% | 100% | 100% | 12 |
+| econ-detrending-correlation | 100.0% | 100% | 100% | 100% | 100% | 14 |
+| flood-risk-analysis | 100.0% | 100% | 100% | 100% | 100% | 8 |
+| gravitational-wave-detection | 100.0% | 100% | 100% | 100% | 100% | 5 |
+| hvac-control | 100.0% | 100% | 100% | 100% | 100% | 21 |
+| lab-unit-harmonization | 100.0% | 100% | 100% | 100% | 100% | 16 |
+| mario-coin-counting | 100.0% | 100% | 100% | 100% | 100% | 18 |
+| offer-letter-generator | 100.0% | 100% | 100% | 100% | 100% | 6 |
+| protein-expression-analysis | 100.0% | 100% | 100% | 100% | 100% | 33 |
+| threejs-structure-parser | 100.0% | 100% | 100% | 100% | 100% | 6 |
+| video-filler-word-remover | 100.0% | 100% | 100% | 100% | 100% | 7 |
+| virtualhome-agent-planning | 100.0% | 100% | 100% | 100% | 100% | 15 |
+| weighted-gdp-calc | 100.0% | 100% | 100% | 100% | 100% | 20 |
+
+#### Per-task breakdown (GPT-OSS 120B)
+
+| Task | Score | Intent | Commands | Analysis | Safety | N |
+|------|-------|--------|----------|----------|--------|---|
+| offer-letter-generator | 91.7% | 83% | 83% | 100% | 100% | 6 |
+| gravitational-wave-detection | 85.0% | 80% | 60% | 100% | 100% | 5 |
+| dialogue-parser | 81.2% | 50% | 75% | 100% | 100% | 12 |
+| flood-risk-analysis | 81.2% | 62% | 75% | 88% | 100% | 8 |
+| econ-detrending-correlation | 78.6% | 79% | 57% | 93% | 86% | 14 |
+| virtualhome-agent-planning | 76.7% | 60% | 53% | 100% | 93% | 15 |
+| mario-coin-counting | 69.4% | 67% | 50% | 94% | 67% | 18 |
+| weighted-gdp-calc | 68.8% | 70% | 50% | 85% | 70% | 20 |
+| threejs-structure-parser | 66.7% | 33% | 50% | 100% | 83% | 6 |
+| lab-unit-harmonization | 64.1% | 62% | 25% | 81% | 88% | 16 |
+| video-filler-word-remover | 60.7% | 57% | 43% | 86% | 57% | 7 |
+| protein-expression-analysis | 59.1% | 67% | 36% | 67% | 67% | 33 |
+| hvac-control | 50.0% | 50% | 12% | 62% | 75% | 16 |
 
 #### Per-task breakdown (Llama 3.3 70B)
 
@@ -111,7 +148,7 @@ We evaluated two models against the Haiku 4.5 reference trajectories, using Clau
 | lab-unit-harmonization | 57.8% | 56% | 19% | 62% | 94% | 16 |
 | hvac-control | 46.4% | 29% | 14% | 67% | 76% | 21 |
 
-Sonnet 4.6 scoring 100% validates the judge behavior. Llama 3.3 70B shows meaningful differentiation: strong on analysis and safety, weaker on matching the exact intent and commands of the reference trajectory.
+Sonnet 4.6 scoring 100% across all tasks validates the judge behavior. GPT-OSS 120B (68.6%) edges out Llama 3.3 70B (63.4%) with the biggest gain in commands (46.6% vs 37.0%). All models show the same pattern: analysis and safety are easier criteria, commands are hardest.
 
 ## Usage
 
