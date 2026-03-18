@@ -283,6 +283,7 @@ Runs are **resumable** — restarting with the same config skips already-complet
 | Directory | Contents |
 |-----------|----------|
 | `data/rounds/all-solved.jsonl` | 181 prompt/completion rounds (8.5MB) |
+| `data/rounds/cache-manifest.json` | Dataset-level caching metadata |
 | `data/raw-trajectories/` | Original agent trajectories from 13 solved tasks |
 | `scripts/trajectory_to_samples.py` | Script to convert trajectories into JSONL rounds |
 
@@ -305,3 +306,60 @@ All tasks were successfully solved by Haiku 4.5 on SkillsBench.
 | offer-letter-generator | 6 | 1.000 |
 | threejs-structure-parser | 6 | 1.000 |
 | gravitational-wave-detection | 5 | 1.000 |
+
+### Cache hints metadata
+
+Each round includes `cache_hints` in its metadata, marking which message blocks are cacheable and how. This is useful for KV cache benchmarking — particularly for evaluating prefix caching and position-independent caching (PIC) implementations.
+
+#### Per-round annotations
+
+Each round's `metadata.cache_hints` is an array of cacheable blocks:
+
+```json
+{
+  "cache_hints": [
+    {
+      "message_index": 0,
+      "type": "prefix",
+      "block": "system_prompt",
+      "hash": "4cb42d9c00fc46be",
+      "char_range": [0, 5192],
+      "shared_prefix_chars": 3036
+    },
+    {
+      "message_index": 2,
+      "type": "pic",
+      "block": "skill_definition",
+      "name": "xlsx",
+      "hash": "adb04f04a2378276",
+      "char_len": 4062,
+      "reusable_across_tasks": true
+    }
+  ]
+}
+```
+
+#### Cache types
+
+| Type | Meaning | Example |
+|------|---------|---------|
+| `prefix` | Identical content always at the same position — standard prefix caching | System prompts: 3,036 chars shared across all 13 tasks, then task-specific suffixes (4,149–6,196 chars total) |
+| `pic` | Identical content appearing at different absolute positions — requires position-independent caching | Skill definitions loaded mid-conversation: same `xlsx` skill (4,062 chars) used in both `protein-expression-analysis` and `weighted-gdp-calc` at different offsets |
+
+#### Dataset-level manifest
+
+`data/rounds/cache-manifest.json` catalogs all unique cacheable blocks across the dataset:
+
+- **13 unique system prompts** — one per task, all sharing a 3,036-char common prefix (agent instructions, response format, skill loading protocol)
+- **19 unique skill definitions** — ranging from 616 to 4,080 chars
+- **1 cross-task skill** (`xlsx`) — the only block that is truly PIC-cacheable (same content at different positions across tasks)
+
+#### Caching profile
+
+The dataset is dominated by prefix-cacheable content (~96% of token traffic). The natural PIC surface is small (~3.5%) because conversations grow linearly — each turn extends the prefix. The PIC-valuable blocks are:
+
+| Block | Size | Requests | Why PIC |
+|-------|------|----------|---------|
+| `xlsx` skill definition | ~1K tokens | 51 rounds | Same skill loaded in 2 tasks with different prompt lengths, shifting its absolute offset |
+| Repeated terminal outputs | ~150-750 chars | 22-49 rounds | Same error messages / tool outputs appearing at different conversation depths within a task |
+| Framework error messages | ~130 chars | scattered | Agent parsing errors at varying turn positions |
