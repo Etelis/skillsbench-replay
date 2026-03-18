@@ -345,21 +345,3 @@ Each round's `metadata.cache_hints` is an array of cacheable blocks:
 |------|---------|---------|
 | `prefix` | Identical content always at the same position — standard prefix caching | System prompts: 3,036 chars shared across all 13 tasks, then task-specific suffixes (4,149–6,196 chars total) |
 | `pic` | Identical content appearing at different absolute positions — requires position-independent caching | Skill definitions loaded mid-conversation: same `xlsx` skill (4,062 chars) used in both `protein-expression-analysis` and `weighted-gdp-calc` at different offsets |
-
-#### Dataset-level manifest
-
-`data/rounds/cache-manifest.json` catalogs all unique cacheable blocks across the dataset:
-
-- **13 unique system prompts** — one per task, all sharing a 3,036-char common prefix (agent instructions, response format, skill loading protocol)
-- **19 unique skill definitions** — ranging from 616 to 4,080 chars
-- **1 cross-task skill** (`xlsx`) — the only block that is truly PIC-cacheable (same content at different positions across tasks)
-
-#### Caching profile
-
-The dataset is dominated by prefix-cacheable content (~96% of token traffic). The natural PIC surface is small (~3.5%) because conversations grow linearly — each turn extends the prefix. The PIC-valuable blocks are:
-
-| Block | Size | Requests | Why PIC |
-|-------|------|----------|---------|
-| `xlsx` skill definition | ~1K tokens | 51 rounds | Same skill loaded in 2 tasks with different prompt lengths, shifting its absolute offset |
-| Repeated terminal outputs | ~150-750 chars | 22-49 rounds | Same error messages / tool outputs appearing at different conversation depths within a task |
-| Framework error messages | ~130 chars | scattered | Agent parsing errors at varying turn positions |
