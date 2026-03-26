@@ -1,0 +1,4 @@
+{
+  "role": "assistant",
+  "content": "I'll help you detect filler words in the interview video and create an output video. Let me start by loading the necessary skills.\n\nFirst, I need to load the whisper-transcription skill to transcribe the video with timestamps, and the filler-word-processing skill to handle the filler word detection and video editing.\n\n```json\n{\n  \"load_skill\": \"whisper-transcription\"\n}\n```"
+}

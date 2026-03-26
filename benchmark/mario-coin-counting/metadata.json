@@ -1,0 +1,11 @@
+{
+  "task": "mario-coin-counting",
+  "source_trial": "mario-coin-counting__6MKsQyr",
+  "agent": "terminus-2-skills",
+  "model": "anthropic/claude-haiku-4-5-20251001",
+  "reward": 1.0,
+  "n_samples": 18,
+  "n_steps": 36,
+  "started_at": "2026-03-12T13:01:50.026605Z",
+  "finished_at": "2026-03-12T13:09:25.688310Z"
+}

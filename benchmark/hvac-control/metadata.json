@@ -1,0 +1,11 @@
+{
+  "task": "hvac-control",
+  "source_trial": "hvac-control__8jtTZQX",
+  "agent": "terminus-2-skills",
+  "model": "anthropic/claude-haiku-4-5-20251001",
+  "reward": 1.0,
+  "n_samples": 21,
+  "n_steps": 42,
+  "started_at": "2026-03-12T12:02:20.249346Z",
+  "finished_at": "2026-03-12T12:15:00.872794Z"
+}

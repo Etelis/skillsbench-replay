@@ -1,0 +1,4 @@
+{
+  "role": "assistant",
+  "content": "I'll start by loading the dialogue_graph skill since this task involves parsing scripts and creating dialogue structures, which is exactly what the skill is designed for.\n\n```json\n{\"load_skill\": \"dialogue_graph\"}\n```"
+}

@@ -1,2 +1,0 @@
-New Terminal Output:
-There are 0 objects (`/root/coin.png`) in file: `/root/keyframes_001.png`

@@ -1,0 +1,57 @@
+{
+  "description": "Trajectory-following benchmark from Haiku 4.5 terminus-2-skills runs",
+  "selection_criteria": "Haiku 4.5 reward >= 0.8",
+  "source": "trajectory.json (ATIF-v1.6 format, includes skill-loading exchanges)",
+  "n_tasks": 12,
+  "n_total_samples": 165,
+  "tasks": {
+    "dialogue-parser": {
+      "reward": 0.833,
+      "n_samples": 12
+    },
+    "econ-detrending-correlation": {
+      "reward": 1.0,
+      "n_samples": 14
+    },
+    "flood-risk-analysis": {
+      "reward": 1.0,
+      "n_samples": 8
+    },
+    "gravitational-wave-detection": {
+      "reward": 1.0,
+      "n_samples": 5
+    },
+    "hvac-control": {
+      "reward": 1.0,
+      "n_samples": 21
+    },
+    "mario-coin-counting": {
+      "reward": 1.0,
+      "n_samples": 18
+    },
+    "offer-letter-generator": {
+      "reward": 1.0,
+      "n_samples": 6
+    },
+    "protein-expression-analysis": {
+      "reward": 1.0,
+      "n_samples": 33
+    },
+    "threejs-structure-parser": {
+      "reward": 1.0,
+      "n_samples": 6
+    },
+    "video-filler-word-remover": {
+      "reward": 1.0,
+      "n_samples": 7
+    },
+    "virtualhome-agent-planning": {
+      "reward": 1.0,
+      "n_samples": 15
+    },
+    "weighted-gdp-calc": {
+      "reward": 1.0,
+      "n_samples": 20
+    }
+  }
+}

@@ -1,8 +1,0 @@
-New Terminal Output:
-Testing different sheet reference syntaxes:
-O28: =MATCH($A11,Data.$A$2:$A$201,0)
-O29: =MATCH($A11,$Data.$A$2:$A$201,0)
-O30: =MATCH($A11,'Data'.$A$2:$A$201,0)
-O31: =INDEX(Data.$A$2:$AZ$201,1,3)
-
-=== Checking existing formulas in the file ===

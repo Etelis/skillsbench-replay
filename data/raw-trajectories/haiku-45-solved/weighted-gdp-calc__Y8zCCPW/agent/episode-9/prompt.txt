@@ -1,3 +1,0 @@
-New Terminal Output:
-Checking existing formula syntax in Task sheet:
-I9: =H9+1

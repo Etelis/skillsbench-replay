@@ -1,0 +1,11 @@
+{
+  "task": "video-filler-word-remover",
+  "source_trial": "video-filler-word-remover__TJDAaoA",
+  "agent": "terminus-2-skills",
+  "model": "anthropic/claude-haiku-4-5-20251001",
+  "reward": 1.0,
+  "n_samples": 7,
+  "n_steps": 14,
+  "started_at": "2026-03-12T12:52:18.299988Z",
+  "finished_at": "2026-03-12T12:58:55.259550Z"
+}

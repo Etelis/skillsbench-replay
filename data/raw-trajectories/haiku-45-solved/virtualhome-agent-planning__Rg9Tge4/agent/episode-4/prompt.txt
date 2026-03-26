@@ -1,9 +1,0 @@
-New Terminal Output:
-total 28
-drwxr-xr-x 2 root root 4096 Mar  9 09:40 .
-drwxr-xr-x 3 root root 4096 Mar 12 11:58 ..
--rw-r--r-- 1 root root 3095 Mar  9 09:40 SKILL.md
--rw-r--r-- 1 root root  398 Mar  9 09:40 generate_plan.skill
--rw-r--r-- 1 root root  421 Mar  9 09:40 load_problem.skill
--rw-r--r-- 1 root root  349 Mar  9 09:40 save_plan.skill
--rw-r--r-- 1 root root  409 Mar  9 09:40 validate.skill

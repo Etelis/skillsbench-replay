@@ -1,6 +1,0 @@
-New Terminal Output:
-=== Recreating INDEX-MATCH formulas with proper range references ===
-Sample formula for C11:
-=IFERROR(INDEX(Data.$A$2:$AZ$201,MATCH($A11,Data.$A$2:$A$201,0),MATCH(C$10,Data.$1:$1,0)),"")
-
-=== File saved ===

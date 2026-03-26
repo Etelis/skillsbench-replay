@@ -1,0 +1,11 @@
+{
+  "task": "weighted-gdp-calc",
+  "source_trial": "weighted-gdp-calc__Y8zCCPW",
+  "agent": "terminus-2-skills",
+  "model": "anthropic/claude-haiku-4-5-20251001",
+  "reward": 1.0,
+  "n_samples": 20,
+  "n_steps": 40,
+  "started_at": "2026-03-12T12:58:55.263400Z",
+  "finished_at": "2026-03-12T13:08:07.270463Z"
+}

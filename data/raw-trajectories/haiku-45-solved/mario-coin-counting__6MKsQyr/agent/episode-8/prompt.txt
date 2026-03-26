@@ -1,2 +1,0 @@
-New Terminal Output:
-/root/keyframes_001.png PNG 1280x720 1280x720+0+0 8-bit Grayscale Gray 256c 69279B 0.000u 0:00.000

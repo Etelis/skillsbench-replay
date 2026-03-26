@@ -1,0 +1,4 @@
+{
+  "role": "assistant",
+  "content": "Now let me load the IMC tuning rules skill as well:\n\n```json\n{\"load_skill\": \"imc-tuning-rules\"}\n```"
+}

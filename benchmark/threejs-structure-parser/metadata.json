@@ -1,0 +1,11 @@
+{
+  "task": "threejs-structure-parser",
+  "source_trial": "threejs-structure-parser__et43Lmy",
+  "agent": "terminus-2-skills",
+  "model": "anthropic/claude-haiku-4-5-20251001",
+  "reward": 1.0,
+  "n_samples": 6,
+  "n_steps": 12,
+  "started_at": "2026-03-12T11:04:10.367554Z",
+  "finished_at": "2026-03-12T11:13:40.320310Z"
+}

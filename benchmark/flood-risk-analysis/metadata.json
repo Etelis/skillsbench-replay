@@ -1,0 +1,11 @@
+{
+  "task": "flood-risk-analysis",
+  "source_trial": "flood-risk-analysis__xgH2Y75",
+  "agent": "terminus-2-skills",
+  "model": "anthropic/claude-haiku-4-5-20251001",
+  "reward": 1.0,
+  "n_samples": 8,
+  "n_steps": 16,
+  "started_at": "2026-03-12T11:42:19.695015Z",
+  "finished_at": "2026-03-12T11:49:36.761519Z"
+}

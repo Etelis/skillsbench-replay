@@ -1,0 +1,4 @@
+{
+  "role": "assistant",
+  "content": "I'll help you work with the protein expression data. First, let me load the xlsx skill since we'll be working with spreadsheet operations.\n\n```json\n{\"load_skill\": \"xlsx\"}\n```"
+}

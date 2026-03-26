@@ -1,0 +1,11 @@
+{
+  "task": "gravitational-wave-detection",
+  "source_trial": "gravitational-wave-detection__t2BTNFa",
+  "agent": "terminus-2-skills",
+  "model": "anthropic/claude-haiku-4-5-20251001",
+  "reward": 1.0,
+  "n_samples": 5,
+  "n_steps": 10,
+  "started_at": "2026-03-12T11:44:17.155709Z",
+  "finished_at": "2026-03-12T11:55:46.014837Z"
+}

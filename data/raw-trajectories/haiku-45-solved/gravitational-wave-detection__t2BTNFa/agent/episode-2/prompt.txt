@@ -1,5 +1,0 @@
-New Terminal Output:
-approximant,snr,total_mass
-SEOBNRv4_opt,17.88,44
-IMRPhenomD,18.07,44
-TaylorT4,17.27,44

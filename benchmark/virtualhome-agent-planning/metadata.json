@@ -1,0 +1,11 @@
+{
+  "task": "virtualhome-agent-planning",
+  "source_trial": "virtualhome-agent-planning__Rg9Tge4",
+  "agent": "terminus-2-skills",
+  "model": "anthropic/claude-haiku-4-5-20251001",
+  "reward": 1.0,
+  "n_samples": 15,
+  "n_steps": 30,
+  "started_at": "2026-03-12T11:58:28.556622Z",
+  "finished_at": "2026-03-12T12:04:46.679358Z"
+}

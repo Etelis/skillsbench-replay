@@ -1,0 +1,4 @@
+{
+  "role": "assistant",
+  "content": "I'll help you solve this task. Let me start by analyzing what needs to be done and loading the appropriate skills.\n\nThe task requires:\n1. Reading USGS station data from `/root/data/michigan_stations.txt`\n2. Downloading water level data for April 1-7, 2025\n3. Detecting flood events using flood thresholds\n4. Outputting results to a CSV file\n\nI'll need to load the relevant skills to accomplish this efficiently.\n\n```json\n{\n  \"load_skill\": \"usgs-data-download\"\n}\n```"
+}

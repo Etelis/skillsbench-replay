@@ -1,0 +1,11 @@
+{
+  "task": "dialogue-parser",
+  "source_trial": "dialogue-parser__bwqCHfi",
+  "agent": "terminus-2-skills",
+  "model": "anthropic/claude-haiku-4-5-20251001",
+  "reward": 0.833,
+  "n_samples": 12,
+  "n_steps": 24,
+  "started_at": "2026-03-12T12:59:06.310765Z",
+  "finished_at": "2026-03-12T13:01:50.021764Z"
+}

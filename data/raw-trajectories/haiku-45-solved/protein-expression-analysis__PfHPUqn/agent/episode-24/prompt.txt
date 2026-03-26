@@ -1,9 +1,0 @@
-New Terminal Output:
-=== Creating simple test formulas ===
-O28: ='Data'.A1
-O29: ='Data'.$A$1
-O30: =INDEX('Data'.$A:$A,2)
-O31: =MATCH(A11,'Data'.$A:$A,0)
-O32: ='Data'!A1
-
-=== File saved ===

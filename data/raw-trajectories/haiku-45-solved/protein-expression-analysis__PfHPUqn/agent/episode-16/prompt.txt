@@ -1,6 +1,0 @@
-New Terminal Output:
-=== Updating formulas with proper LibreOffice syntax ===
-Sample formula for C11:
-=IFERROR(INDEX($Data.$A$2:$AZ$201,MATCH($A11,$Data.$A$2:$A$201,0),MATCH(C$10,$Data.$1:$1,0)),"")
-
-=== File saved with updated syntax ===

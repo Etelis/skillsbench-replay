@@ -1,4 +1,0 @@
-New Terminal Output:
-Traceback (most recent call last):
-  File "<stdin>", line 41, in <module>
-ValueError: operands could not be broadcast together with shapes (60,) (52,)

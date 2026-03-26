@@ -1,0 +1,4 @@
+{
+  "role": "assistant",
+  "content": "Now let me load the filler-word-processing skill as well:\n\n```json\n{\n  \"load_skill\": \"filler-word-processing\"\n}\n```"
+}

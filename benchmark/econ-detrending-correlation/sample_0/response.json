@@ -1,0 +1,4 @@
+{
+  "role": "assistant",
+  "content": "I'll start by loading the timeseries-detrending skill since this task directly involves detrending techniques for economic data analysis.\n\n```json\n{\"load_skill\": \"timeseries-detrending\"}\n```"
+}

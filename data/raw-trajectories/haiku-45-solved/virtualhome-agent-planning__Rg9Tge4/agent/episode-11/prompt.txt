@@ -1,3 +1,0 @@
-New Terminal Output:
--rw-r--r-- 1 root root 524 Mar 12 12:02 task01.txt
--rw-r--r-- 1 root root 593 Mar 12 12:02 task02.txt

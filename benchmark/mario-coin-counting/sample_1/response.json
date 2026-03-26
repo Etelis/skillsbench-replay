@@ -1,0 +1,4 @@
+{
+  "role": "assistant",
+  "content": "Now let me load the object_counter skill:\n\n```json\n{\"load_skill\": \"object_counter\"}\n```"
+}
