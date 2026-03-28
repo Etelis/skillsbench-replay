@@ -107,8 +107,7 @@ def judge_results(results_file: Path, args) -> dict:
     from unitxt.api import create_dataset, evaluate
     from unitxt.inference import OpenAiInferenceEngine
     from unitxt.llm_as_judge import LLMJudgeDirect
-    from unitxt.catalog import add_to_catalog
-    from unitxt.criteria import Criteria
+    from unitxt.llm_as_judge_constants import CriteriaWithOptions, CriteriaOption
 
     with open(results_file) as f:
         results = json.load(f)
@@ -120,19 +119,18 @@ def judge_results(results_file: Path, args) -> dict:
         print(f"  No valid samples to judge in {results_file.name}")
         return {}
 
-    # Register custom criteria in unitxt catalog
+    # Build criteria objects
+    criteria_objects = {}
     for name, defn in CRITERIA_DEFINITIONS.items():
-        catalog_name = f"metrics.llm_as_judge.direct.criteria.skillsbench_{name}"
-        criteria = Criteria(
-            criteria_description=defn["description"],
-            criteria_name=defn["name"],
+        criteria_objects[name] = CriteriaWithOptions(
+            name=defn["name"],
+            description=defn["description"],
             options=[
-                {"name": o["name"], "description": o["description"]}
+                CriteriaOption(name=o["name"], description=o["description"])
                 for o in defn["options"]
             ],
             option_map=defn["option_map"],
         )
-        add_to_catalog(criteria, catalog_name, overwrite=True)
 
     # Build unitxt data — reference goes into 'context'
     data = [
@@ -159,46 +157,49 @@ def judge_results(results_file: Path, args) -> dict:
         temperature=0.0,
     )
 
-    # One metric per criterion
-    metrics = []
-    for name in CRITERIA:
-        catalog_name = f"metrics.llm_as_judge.direct.criteria.skillsbench_{name}"
-        metrics.append(
-            LLMJudgeDirect(
+    # Run each criterion separately to isolate failures
+    criterion_scores = {}
+    all_instance_scores = [{} for _ in valid]
+
+    for crit_name in CRITERIA:
+        print(f"  Evaluating criterion: {crit_name}")
+        try:
+            metric = LLMJudgeDirect(
                 inference_engine=engine,
-                criteria=catalog_name,
+                criteria=criteria_objects[crit_name],
                 context_fields=["context"],
                 criteria_field="criteria",
             )
-        )
 
-    dataset = create_dataset(
-        task="tasks.qa.with_context",
-        test_set=data,
-        metrics=metrics,
-        split="test",
-    )
+            dataset = create_dataset(
+                task="tasks.qa.with_context",
+                test_set=data,
+                metrics=[metric],
+                split="test",
+            )
 
-    eval_results = evaluate(predictions=predictions, data=dataset)
+            eval_results = evaluate(predictions=predictions, data=dataset)
 
-    # Extract per-criterion scores
-    criterion_scores = {}
-    for name in CRITERIA:
-        for k, v in eval_results.global_scores.items():
-            if f"skillsbench_{name}" in k and isinstance(v, (int, float)):
-                criterion_scores[name] = v
-                break
-
-    # Per-instance scores
-    instance_scores = []
-    for inst in eval_results.instance_scores:
-        inst_score = {"sample_id": inst.get("question", "")}
-        for name in CRITERIA:
-            for k, v in inst.items():
-                if f"skillsbench_{name}" in str(k) and isinstance(v, (int, float)):
-                    inst_score[name] = v
+            # Extract global score
+            for k, v in eval_results.global_scores.items():
+                if crit_name in k and isinstance(v, (int, float)):
+                    criterion_scores[crit_name] = v
                     break
-        instance_scores.append(inst_score)
+
+            # Extract per-instance scores
+            for i, inst in enumerate(eval_results.instance_scores):
+                for k, v in inst.items():
+                    if crit_name in str(k) and isinstance(v, (int, float)):
+                        all_instance_scores[i][crit_name] = v
+                        break
+        except Exception as e:
+            print(f"  WARNING: criterion '{crit_name}' failed: {e}")
+            criterion_scores[crit_name] = 0.0
+
+    instance_scores = [
+        {"sample_id": valid[i]["sample_id"], **all_instance_scores[i]}
+        for i in range(len(valid))
+    ]
 
     # Per-task aggregation
     task_scores = {}
