@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "```json\n{\"load_skill\": \"matched-filtering\"}\n```",
+  "model": "meta-llama/Llama-3.3-70B-Instruct",
+  "finish_reason": "stop",
+  "latency_seconds": 1.0796077251434326,
+  "prompt_tokens": 2178,
+  "completion_tokens": 13
+}

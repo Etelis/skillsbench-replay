@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "```json\n{\n  \"load_skill\": \"pddl-skills\"\n}\n```",
+  "model": "meta-llama/Llama-3.3-70B-Instruct",
+  "finish_reason": "stop",
+  "latency_seconds": 1.1034917831420898,
+  "prompt_tokens": 1270,
+  "completion_tokens": 17
+}

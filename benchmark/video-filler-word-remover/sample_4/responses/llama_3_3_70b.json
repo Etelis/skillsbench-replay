@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "It seems like the Whisper library is not installed. Let me install it.\n\n```json\n{\n  \"analysis\": \"The Whisper library is not installed, which is necessary for transcribing the video.\",\n  \"plan\": \"I will install the Whisper library using pip.\",\n  \"commands\": [\n    {\n      \"keystrokes\": \"pip install git+https://github.com/openai/whisper.git\\n\",\n      \"duration\": 30.0\n    }\n  ],\n  \"task_complete\": false\n}\n```",
+  "model": "meta-llama/Llama-3.3-70B-Instruct",
+  "finish_reason": "stop",
+  "latency_seconds": 3.2826008796691895,
+  "prompt_tokens": 5480,
+  "completion_tokens": 106
+}

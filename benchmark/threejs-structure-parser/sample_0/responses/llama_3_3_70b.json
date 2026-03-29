@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "```json\n{\n  \"load_skill\": \"threejs\"\n}\n```",
+  "model": "meta-llama/Llama-3.3-70B-Instruct",
+  "finish_reason": "stop",
+  "latency_seconds": 1.0859661102294922,
+  "prompt_tokens": 1210,
+  "completion_tokens": 15
+}

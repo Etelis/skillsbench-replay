@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "It seems that the Whisper module is not installed. Let me install it first.\n\n```json\n{\n  \"commands\": [\n    {\n      \"keystrokes\": \"pip install openai-whisper\\n\",\n      \"duration\": 10.0\n    }\n  ],\n  \"task_complete\": false\n}\n```",
+  "model": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+  "finish_reason": "stop",
+  "latency_seconds": 2.404494047164917,
+  "prompt_tokens": 5436,
+  "completion_tokens": 66
+}

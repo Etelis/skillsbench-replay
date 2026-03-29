@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "```json\n{\n  \"load_skill\": \"whisper-transcription\"\n}\n```",
+  "model": "meta-llama/Llama-3.3-70B-Instruct",
+  "finish_reason": "stop",
+  "latency_seconds": 1.1321909427642822,
+  "prompt_tokens": 1232,
+  "completion_tokens": 17
+}

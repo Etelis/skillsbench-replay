@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "```json\n{\n  \"load_skill\": \" # # xlsx\"\n}\n```",
+  "model": "meta-llama/Llama-3.3-70B-Instruct",
+  "finish_reason": "stop",
+  "latency_seconds": 1.053692102432251,
+  "prompt_tokens": 1204,
+  "completion_tokens": 17
+}

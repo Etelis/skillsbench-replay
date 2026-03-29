@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "The task is now complete. The filler words have been detected and extracted from the video, and the resulting segments have been concatenated into a single video file at `/root/output.mp4`.",
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "finish_reason": "stop",
+  "latency_seconds": 1.1576828956604004,
+  "prompt_tokens": 12510,
+  "completion_tokens": 37
+}

@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "Now the task is complete.",
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "finish_reason": "stop",
+  "latency_seconds": 0.8805282115936279,
+  "prompt_tokens": 23903,
+  "completion_tokens": 6
+}

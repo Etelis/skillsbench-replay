@@ -1,0 +1,9 @@
+{
+  "role": "assistant",
+  "content": "It seems like the Whisper library is not installed. Let me install it for you.\n\n```json\n{\n  \"commands\": [\n    {\n      \"keystrokes\": \"pip3 install openai-whisper\\n\",\n      \"duration\": 0.1\n    }\n  ]\n}\n```\n\nPlease wait for the installation to complete.",
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "finish_reason": "stop",
+  "latency_seconds": 1.2117409706115723,
+  "prompt_tokens": 5480,
+  "completion_tokens": 68
+}
