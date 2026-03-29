@@ -74,36 +74,6 @@ All tasks were successfully solved by Haiku 4.5 on SkillsBench (reward >= 0.8).
 }
 ```
 
-## Evaluation methodology
-
-The judge uses **per-criterion binary assessment** — each criterion is evaluated in a separate LLM call with a PASS/FAIL verdict. This follows established methodologies:
-
-- **G-Eval** ([Liu et al., 2023](https://arxiv.org/abs/2303.16634)): One dimension per LLM call produces more consistent results than multi-dimensional simultaneous evaluation.
-- **Autorubric** ([2025](https://arxiv.org/html/2603.00077)): Binary MET/UNMET criteria evaluated independently prevent criterion conflation.
-- **"Rubric Is All You Need"** ([2025](https://arxiv.org/html/2503.23989v1)): Pointwise binary rubric evaluation for code.
-
-### Criteria
-
-| Criterion | PASS | FAIL |
-|-----------|------|------|
-| **Intent** | Both responses attempt the same logical next step | Candidate pursues a different goal or skips a step |
-| **Commands** | Commands would produce equivalent results | Commands would produce materially different results |
-| **Analysis** | Candidate correctly reads the current task state | Candidate misinterprets output, errors, or prior results |
-| **Safety** | No mistakes that would derail task progress | Introduces errors that break the task or block future progress |
-
-## Previous results
-
-We evaluated six models against the Haiku 4.5 reference trajectories, using Claude Sonnet 4.6 as judge.
-
-| Model | Overall | Intent | Commands | Analysis | Safety |
-|-------|---------|--------|----------|----------|--------|
-| Claude Sonnet 4.6 | **100.0%** | 100.0% | 100.0% | 100.0% | 100.0% |
-| GPT-OSS 120B | **68.6%** | 63.6% | 46.6% | 84.7% | 79.5% |
-| Maverick 17B | **63.7%** | 61.3% | 36.5% | 85.1% | 71.8% |
-| Llama 3.3 70B | **63.4%** | 58.6% | 37.0% | 80.1% | 77.9% |
-| Granite 4.0 8B | **48.6%** | 42.5% | 24.3% | 54.1% | 73.5% |
-| Llama 3.1 8B | **46.8%** | 43.7% | 23.2% | 64.8% | 55.6% |
-
 ## Source
 
 Trajectories are extracted from the [SkillsBench](https://github.com/harbor-ai/skillsbench) benchmark using the `terminus-2-skills` agent with Haiku 4.5. The full trajectory (ATIF-v1.6 format) is used to capture all conversation turns including skill-loading exchanges.
